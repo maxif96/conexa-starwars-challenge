@@ -69,13 +69,41 @@ La aplicación incluye usuarios predefinidos para testing:
 3. **Verificación**: `GET /api/v1/auth/check-username/{username}`
 4. **Uso**: Incluir token en header `Authorization: Bearer {token}`
 
+## URLs de Acceso
+
+### 🌐 **Local Development**
+- **Base URL**: `http://localhost:8080/api/v1`
+- **Swagger UI**: `http://localhost:8080/swagger-ui.html`
+- **H2 Console**: `http://localhost:8080/h2-console`
+
+### 🚀 **Heroku Production**
+- **Base URL**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api/v1`
+- **Swagger UI**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui.html`
+- **API Docs**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api-docs`
+
+---
+
 ## Endpoints de la API
 
 ### Autenticación
 
 #### 1. Registro de Usuario
+
+**Local:**
 ```http
 POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "username": "nuevo_usuario",
+    "password": "mi_contraseña",
+    "confirmPassword": "mi_contraseña"
+}
+```
+
+**Heroku:**
+```http
+POST https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api/v1/auth/register
 Content-Type: application/json
 
 {
@@ -124,9 +152,17 @@ GET http://localhost:8080/api/v1/auth/check-username/{username}
 ### 👥 People (Personajes)
 
 #### Listado Paginado
+
+**Local:**
 ```http
 GET http://localhost:8080/api/v1/people?page=1&limit=10
 GET http://localhost:8080/api/v1/people?page=2&limit=5
+```
+
+**Heroku:**
+```http
+GET https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api/v1/people?page=1&limit=10
+GET https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api/v1/people?page=2&limit=5
 ```
 
 #### Búsqueda por Nombre
@@ -227,10 +263,50 @@ mvn test
 mvn verify
 ```
 
+## 🚀 Despliegue en Heroku
+
+### Configuración Automática
+La aplicación está configurada para desplegarse automáticamente en Heroku:
+
+1. **Variables de Entorno Configuradas:**
+   - `JWT_SECRET`: Clave secreta para JWT
+   - `JWT_EXPIRATION`: Tiempo de expiración del token
+   - `SPRING_PROFILES_ACTIVE`: Perfil de producción
+
+2. **Buildpacks:**
+   - Java 8 runtime
+   - Maven build system
+
+3. **URL de Producción:**
+   - **App**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com`
+   - **Swagger UI**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui.html`
+
+### Despliegue Manual (si es necesario)
+```bash
+# Instalar Heroku CLI
+# Crear app en Heroku
+heroku create conexa-starwars-api
+
+# Configurar variables de entorno
+heroku config:set JWT_SECRET="tu-secret-key"
+heroku config:set JWT_EXPIRATION="86400000"
+heroku config:set SPRING_PROFILES_ACTIVE="prod"
+
+# Desplegar
+git push heroku main
+```
+
 ### Acceso a Herramientas
-- **Swagger UI**: http://localhost:8080/api/v1/swagger-ui/
-- **H2 Console**: http://localhost:8080/api/v1/h2-console
-- **API Docs**: http://localhost:8080/api/v1/v2/api-docs
+
+**Local Development:**
+- **Swagger UI**: `http://localhost:8080/swagger-ui.html`
+- **H2 Console**: `http://localhost:8080/h2-console`
+- **API Docs**: `http://localhost:8080/api-docs`
+
+**Heroku Production:**
+- **Swagger UI**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui.html`
+- **API Docs**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api-docs`
+- **H2 Console**: No disponible en producción
 
 ## Testing
 
