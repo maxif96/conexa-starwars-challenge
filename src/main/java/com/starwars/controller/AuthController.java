@@ -23,7 +23,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Authentication", description = "Endpoints para autenticación y registro de usuarios")
+@Tag(name = "A. Authentication")
 @Validated
 public class AuthController {
 

@@ -17,7 +17,7 @@ import javax.validation.constraints.Min;
 @Slf4j
 @RestController
 @RequestMapping("/people")
-@Tag(name = "People", description = "Endpoints para gestionar personajes de Star Wars")
+@Tag(name = "C. People")
 @Validated
 public class PeopleController {
 

@@ -17,7 +17,7 @@ import javax.validation.constraints.Min;
 @Slf4j
 @RestController
 @RequestMapping("/starships")
-@Tag(name = "Starships", description = "Endpoints para gestionar naves espaciales de Star Wars")
+@Tag(name = "D. Starships")
 @Validated
 public class StarshipsController {
 

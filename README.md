@@ -1,11 +1,18 @@
 # Star Wars API - Sistema de Autenticación y Gestión de Datos
 
 ## Descripción
-API REST que integra con la API oficial de Star Wars (swapi.tech) y proporciona un sistema de autenticación con JWT. La aplicación maneja cuatro entidades principales: **People** (Personajes), **Films** (Películas), **Starships** (Naves Espaciales) y **Vehicles** (Vehículos), con funcionalidades de listado paginado, búsqueda por nombre y obtención por ID.
+API REST que integra con la API oficial de Star Wars ([swapi.tech](https://www.swapi.tech)) y proporciona un sistema de autenticación con JWT. La aplicación maneja cuatro entidades principales: **People** (Personajes), **Films** (Películas), **Starships** (Naves Espaciales) y **Vehicles** (Vehículos), con funcionalidades de listado paginado, búsqueda por nombre y obtención por ID.
+
+### 🔗 **Integración con SWAPI**
+Esta API se integra con [SWAPI (Star Wars API)](https://www.swapi.tech) para obtener datos oficiales de Star Wars. SWAPI es una API REST pública que proporciona información completa sobre personajes, películas, naves espaciales y vehículos del universo de Star Wars.
+
+- **Documentación oficial**: [https://www.swapi.tech/documentation](https://www.swapi.tech/documentation)
+- **Base URL**: `https://www.swapi.tech/api`
+- **Datos**: Información canónica y actualizada de Star Wars
 
 ## Características Principales
 - **Sistema de autenticación JWT** completo
-- **Integración con SWAPI** (Star Wars API oficial)
+- **Integración con SWAPI** (Star Wars API oficial) - [Ver documentación](https://www.swapi.tech/documentation)
 - **Listado paginado** de todas las entidades
 - **Búsqueda por nombre** con filtrado
 - **Obtención por ID** con manejo de errores
@@ -13,6 +20,31 @@ API REST que integra con la API oficial de Star Wars (swapi.tech) y proporciona 
 - **Base de datos H2** en memoria para usuarios
 - **Tests unitarios e integración** con estrategia híbrida
 - **Mensajes de error en español** para mejor UX
+
+## 🔗 **Integración con SWAPI (Star Wars API)**
+
+### **¿Qué es SWAPI?**
+[SWAPI](https://www.swapi.tech) es una API REST pública que proporciona información completa y canónica sobre el universo de Star Wars. Es la fuente oficial de datos para personajes, películas, naves espaciales, vehículos y más.
+
+### **Características de SWAPI**
+- **Datos oficiales**: Información canónica de Star Wars
+- **API REST**: Endpoints estándar y bien documentados
+- **Gratuita**: Sin costos ni límites de uso
+- **Actualizada**: Datos mantenidos por la comunidad
+
+### **Documentación y Recursos**
+- Documentación oficial: [https://www.swapi.tech/documentation](https://www.swapi.tech/documentation)
+- Sitio web: [https://www.swapi.tech](https://www.swapi.tech)
+-  Base URL: `https://www.swapi.tech/api`
+- 📊 Endpoints disponibles: People, Films, Starships, Vehicles, Planets, Species
+
+### **Cómo se integra con nuestra API**
+Nuestra API actúa como un **wrapper inteligente** de SWAPI, proporcionando:
+- **Autenticación JWT** para acceso controlado
+- **Transformación de datos** para respuestas consistentes
+- **Paginación mejorada** con parámetros personalizables
+- **Búsqueda por nombre** con filtrado inteligente
+- **Manejo de errores** robusto y mensajes en español
 
 ## Tecnologías Utilizadas
 - **Java 8**
@@ -45,7 +77,7 @@ src/main/java/com/starwars/
 └── service/        # Lógica de negocio
 ```
 
-### Patrones de Diseño
+### Patrones de diseño y arquitectónicos aplicados
 - **DTO Pattern**: Separación entre datos de API externa y respuesta interna
 - **Mapper Pattern**: Conversión automática entre DTOs usando MapStruct
 - **Repository Pattern**: Abstracción de acceso a datos
@@ -72,14 +104,152 @@ La aplicación incluye usuarios predefinidos para testing:
 ## URLs de Acceso
 
 ### 🌐 **Local Development**
+- **Página de Inicio**: `http://localhost:8080/`
 - **Base URL**: `http://localhost:8080/api/v1`
-- **Swagger UI**: `http://localhost:8080/swagger-ui.html`
+- **Swagger UI**: `http://localhost:8080/swagger-ui/index.html`
 - **H2 Console**: `http://localhost:8080/h2-console`
 
 ### 🚀 **Heroku Production**
+- **Página de Inicio**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/`
 - **Base URL**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api/v1`
-- **Swagger UI**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui.html`
+- **Swagger UI**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui/index.html`
 - **API Docs**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api-docs`
+
+## 🏠 **Página de Inicio**
+
+### 🌟 **Acceso a la Página Principal**
+Cuando accedas a la URL base de la API, encontrarás una página de inicio atractiva y funcional que incluye:
+
+- **Información general** sobre la API
+- **Enlaces directos** a Swagger UI y documentación
+- **Lista de endpoints** principales con ejemplos
+- **Diseño responsive** y moderno con tema Star Wars
+- **Navegación intuitiva** a todas las funcionalidades
+
+#### **URLs de Acceso:**
+- **Local**: `http://localhost:8080/`
+- **Heroku**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/`
+
+### 📋 **Información de la API (JSON)**
+También puedes obtener información de la API en formato JSON:
+
+- **Local**: `http://localhost:8080/api`
+- **Heroku**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api`
+
+Esta respuesta incluye:
+- Nombre y descripción de la API
+- Versión y autor
+- Lista de endpoints disponibles
+- Enlaces a documentación
+
+### Desarrollo Asistido por IA
+Este proyecto ha sido desarrollado utilizando **Inteligencia Artificial de forma controlada y responsable** para optimizar el proceso de desarrollo. La IA se utilizó principalmente para:
+- **Generación de código estructurado** (entidades, DTOs, mappers)
+- **Documentación y plantillas** (README, documentación técnica)
+- **Configuraciones base** (Spring Boot, seguridad, testing)
+- **Reducción de código boilerplate** y tareas repetitivas
+
+**Importante**: Todo el código generado por IA fue revisado, validado y ajustado manualmente por mi, garantizando la calidad y corrección de la implementación. Para más detalles consultar la [Documentación Técnica](./docs/TECHNICAL_DOCS.md#-uso-de-inteligencia-artificial-en-el-desarrollo).
+
+###  **Acceso a Swagger UI**
+Swagger UI proporciona una interfaz web interactiva para probar todos los endpoints de la API de manera sencilla.
+
+#### **URLs de Acceso:**
+- **Local**: `http://localhost:8080/swagger-ui/index.html`
+- **Heroku**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui/index.html`
+
+### 🔐 **Configuración de Autenticación JWT**
+
+#### **Paso 1: Obtener Token JWT**
+1. **Accede a Swagger UI** usando una de las URLs anteriores
+2. **Ve a la sección "A. Authentication"**
+3. **Usa el endpoint de login o registro** para obtener un token JWT
+4. **Ejemplo de login:**
+   ```json
+   {
+     "username": "admin",
+     "password": "admin123"
+   }
+   ```
+5. **Copia el token** de la respuesta (sin incluir "Bearer ")
+
+#### **Paso 2: Configurar Autenticación**
+1. **Haz clic en el botón "Authorize" (🔒)** en la parte superior derecha
+2. **Ingresa tu token JWT** en el campo "bearerAuth"
+3. **Formato**: `eyJhbGciOiJIUzI1NiJ9...` (solo el token)
+4. **Haz clic en "Authorize"**
+5. **Cierra el modal** de autorización
+
+#### **Paso 3: Probar Endpoints Protegidos**
+1. **Ahora puedes probar** todos los endpoints protegidos
+2. **El token se enviará automáticamente** en el header Authorization
+3. **Swagger UI** mostrará el tiempo de respuesta de cada petición
+
+### 📋 **Organización de Endpoints en Swagger UI**
+
+#### **Grupos de Endpoints:**
+1. **A. Authentication** - Login, registro y verificación de usuarios
+2. **B. Films** - Gestión de películas de Star Wars
+3. **C. People** - Gestión de personajes de Star Wars
+4. **D. Starships** - Gestión de naves espaciales
+5. **E. Vehicles** - Gestión de vehículos
+
+#### **Características de la UI:**
+- **Endpoints colapsados** por defecto para mejor organización
+- **Ordenamiento alfabético** de grupos y operaciones
+- **Tiempo de respuesta** visible para cada petición
+- **Validación automática** de esquemas de entrada
+- **Respuestas de ejemplo** para mejor comprensión
+
+### 🧪 **Ejemplos de Uso con Swagger UI**
+
+#### **Ejemplo 1: Autenticación Completa**
+1. **Registra un nuevo usuario** usando `/auth/register`
+2. **Obtén el token JWT** de la respuesta
+3. **Configura la autenticación** con el botón Authorize
+4. **Prueba endpoints protegidos** como `/people` o `/films`
+
+#### **Ejemplo 2: Búsqueda de Personajes**
+1. **Asegúrate de estar autenticado**
+2. **Ve a la sección "C. People"**
+3. **Expande el endpoint GET `/people`**
+4. **Configura parámetros opcionales:**
+   - `name`: Filtro por nombre (ej: "Luke")
+   - `page`: Número de página (default: 1)
+   - `limit`: Resultados por página (default: 10)
+5. **Haz clic en "Try it out"**
+6. **Ejecuta la petición** y revisa la respuesta
+
+#### **Ejemplo 3: Obtención por ID**
+1. **Selecciona un endpoint** como GET `/people/{id}`
+2. **Ingresa un ID válido** (ej: "1")
+3. **Ejecuta la petición** para obtener detalles completos
+
+### 🔧 **Solución de Problemas Comunes**
+
+#### **Error 401 (Unauthorized):**
+- **Verifica** que hayas configurado el token JWT
+- **Asegúrate** de que el token no haya expirado
+- **Revisa** que el token esté en el formato correcto
+
+#### **Error 403 (Forbidden):**
+- **Verifica** que el token sea válido
+- **Verifica** que el token no haya caducado
+
+#### **Error 404 (Not Found):**
+- **Revisa** que la URL del endpoint sea correcta
+- **Verifica** que el ID del recurso exista
+
+#### **Error 500 (Internal Server Error):**
+- **Revisa** los logs del servidor
+- **Verifica** que los parámetros de entrada sean válidos
+
+### 💡 **Consejos para Mejor Experiencia**
+
+1. **Usa los usuarios de prueba**: `admin/admin123`, `user/user123`, `test/test123`
+2. **Revisa las respuestas**: Swagger UI muestra el esquema completo de respuestas
+3. **Experimenta con parámetros**: Prueba diferentes valores para entender mejor la API
+4. **Usa la documentación**: Cada endpoint tiene descripción detallada y ejemplos
 
 ---
 
@@ -149,7 +319,7 @@ GET http://localhost:8080/api/v1/auth/check-username/{username}
 - `true` si el username está disponible
 - `false` si ya está en uso
 
-### 👥 People (Personajes)
+###  People (Personajes)
 
 #### Listado Paginado
 
@@ -177,7 +347,7 @@ GET http://localhost:8080/api/v1/people?name=r2
 GET http://localhost:8080/api/v1/people/1
 ```
 
-### 🎬 Films (Películas)
+###  Films (Películas)
 
 #### Listado Paginado
 ```http
@@ -216,7 +386,7 @@ GET http://localhost:8080/api/v1/starships/9
 GET http://localhost:8080/api/v1/starships/10
 ```
 
-### 🚗 Vehicles (Vehículos)
+###  Vehicles (Vehículos)
 
 #### Listado Paginado
 ```http
@@ -261,39 +431,6 @@ mvn test
 
 # Ejecutar tests de integración
 mvn verify
-```
-
-## 🚀 Despliegue en Heroku
-
-### Configuración Automática
-La aplicación está configurada para desplegarse automáticamente en Heroku:
-
-1. **Variables de Entorno Configuradas:**
-   - `JWT_SECRET`: Clave secreta para JWT
-   - `JWT_EXPIRATION`: Tiempo de expiración del token
-   - `SPRING_PROFILES_ACTIVE`: Perfil de producción
-
-2. **Buildpacks:**
-   - Java 8 runtime
-   - Maven build system
-
-3. **URL de Producción:**
-   - **App**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com`
-   - **Swagger UI**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui.html`
-
-### Despliegue Manual (si es necesario)
-```bash
-# Instalar Heroku CLI
-# Crear app en Heroku
-heroku create conexa-starwars-api
-
-# Configurar variables de entorno
-heroku config:set JWT_SECRET="tu-secret-key"
-heroku config:set JWT_EXPIRATION="86400000"
-heroku config:set SPRING_PROFILES_ACTIVE="prod"
-
-# Desplegar
-git push heroku main
 ```
 
 ### Acceso a Herramientas
@@ -452,9 +589,6 @@ curl -X GET "http://localhost:8080/api/v1/films/1" \
 - **Validación de entrada** en todos los endpoints
 - **Manejo de errores** centralizado y seguro
 
-### ⚠️ Nota sobre JWT Secret
-**Importante**: La JWT secret está configurada en `application.properties` por practicidad para este challenge técnico. En ambientes de producción, se recomienda usar variables de entorno o servicios de gestión de secretos para mayor seguridad.
-
 ### Endpoints Públicos
 - `/api/v1/auth/**` - Autenticación
 - `/api/v1/swagger-ui/**` - Documentación
@@ -471,24 +605,6 @@ curl -X GET "http://localhost:8080/api/v1/films/1" \
 Para información técnica detallada, consulta:
 - **[Documentación Técnica](./docs/TECHNICAL_DOCS.md)** - Arquitectura y decisiones técnicas
 - **[Guía de Testing](./docs/TESTING_GUIDE.md)** - Estrategia y ejemplos de tests
-- **[Guía de Despliegue](./docs/DEPLOYMENT_GUIDE.md)** - Configuración de producción
-
-## Contribución
-
-### Estructura de Commits
-- `feat:` Nueva funcionalidad
-- `fix:` Corrección de bugs
-- `docs:` Documentación
-- `test:` Tests
-- `refactor:` Refactorización de código
-- `style:` Formato de código
-
-### Estándares de Código
-- **Java**: Google Java Style Guide
-- **Spring**: Spring Framework conventions
-- **Testing**: Arrange-Act-Assert pattern
-- **Documentación**: Javadoc para métodos públicos
-
 ## Licencia
 Este proyecto es parte del **Conexa Challenge** y está diseñado para demostrar habilidades técnicas en desarrollo Java con Spring Boot.
 
@@ -498,17 +614,9 @@ Este proyecto es parte del **Conexa Challenge** y está diseñado para demostrar
 
 ```bash
 # Clonar y ejecutar
-git clone <repository-url>
+git clone https://github.com/maxif96/conexa-starwars-challenge
 cd starwars-api
 mvn spring-boot:run
-
-# Acceder a Swagger
-open http://localhost:8080/api/v1/swagger-ui/
-
-# Login con usuario de prueba
-curl -X POST http://localhost:8080/api/v1/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin123"}'
 ```
 
 **¡Que la Fuerza esté contigo!**

@@ -370,38 +370,8 @@ mvn test
 
 # Ejecutar tests con información detallada
 mvn test -X
-
-# Ejecutar tests y generar reporte
-mvn test jacoco:report
 ```
 
-#### **Ejecutar Tests Específicos**
-```bash
-# Solo tests unitarios
-mvn test -Dtest="*UnitTest"
-
-# Solo tests de integración
-mvn test -Dtest="*IntegrationTest"
-
-# Tests específicos por clase
-mvn test -Dtest="PersonServiceUnitTest"
-mvn test -Dtest="PeopleControllerIntegrationTest"
-
-# Tests específicos por método
-mvn test -Dtest="PersonServiceUnitTest#getPersonById_ValidId_ShouldReturnPerson"
-```
-
-#### **Ejecutar Tests con Perfiles**
-```bash
-# Tests con perfil de desarrollo
-mvn test -Pdev
-
-# Tests con perfil de integración
-mvn test -Pintegration
-
-# Tests con perfil de producción
-mvn test -Pprod
-```
 
 ### Configuración de IDE
 
@@ -430,44 +400,7 @@ mvn test -Pprod
    - Click derecho en clase → Run As → JUnit Test
    - Click derecho en método → Run As → JUnit Test
 
-### Configuración de Tests
 
-#### **application-test.properties**
-```properties
-# Configuración específica para tests
-spring.datasource.url=jdbc:h2:mem:testdb
-spring.jpa.hibernate.ddl-auto=create-drop
-spring.jpa.show-sql=false
-
-# Configuración de SWAPI para tests
-swapi.api.base-url=http://localhost:9999/api
-
-# Configuración de logging para tests
-logging.level.com.starwars=DEBUG
-logging.level.org.springframework.web=DEBUG
-```
-
-#### **TestConfig.java**
-```java
-@TestConfiguration
-public class TestConfig {
-    
-    @Bean
-    public RestTemplate testRestTemplate() {
-        return new RestTemplateBuilder()
-                .setConnectTimeout(Duration.ofSeconds(1))
-                .setReadTimeout(Duration.ofSeconds(1))
-                .build();
-    }
-    
-    @Bean
-    public ObjectMapper testObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        return mapper;
-    }
-}
-```
 
 ---
 
@@ -760,66 +693,3 @@ public void debugTest() {
 
 ---
 
-## Métricas y Cobertura
-
-### Cobertura de Tests
-```bash
-# Generar reporte de cobertura con JaCoCo
-mvn clean test jacoco:report
-
-# Ver reporte en: target/site/jacoco/index.html
-```
-
-### Métricas de Performance
-```bash
-# Ejecutar tests con métricas de tiempo
-mvn test -Dtest=PersonServiceUnitTest -Dsurefire.useFile=false
-
-# Ver tiempos en consola
-```
-
-### Reportes de Tests
-```bash
-# Generar reporte HTML de tests
-mvn surefire-report:report
-
-# Ver reporte en: target/site/surefire-report.html
-```
-
----
-
-## 🔮 Mejoras Futuras
-
-### Corto Plazo
-1. **Agregar tests de performance** con JMeter
-2. **Implementar tests de mutación** con PIT
-3. **Agregar tests de contrato** con Pact
-
-### Mediano Plazo
-1. **Migrar a JUnit 5** cuando se actualice Spring Boot
-2. **Implementar tests de integración con Testcontainers**
-3. **Agregar tests de seguridad** con OWASP ZAP
-
-### Largo Plazo
-1. **Implementar tests de carga** con Gatling
-2. **Agregar tests de UI** con Selenium
-3. **Implementar tests de API con Karate**
-
----
-
-## Recursos Adicionales
-
-### Documentación
-- [JUnit 4 User Guide](https://junit.org/junit4/)
-- [Mockito Documentation](https://javadoc.io/doc/org.mockito/mockito-core/)
-- [WireMock Documentation](http://wiremock.org/docs/)
-- [Spring Boot Testing](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-testing)
-
-### Herramientas
-- [JaCoCo](https://www.jacoco.org/jacoco/trunk/doc/) - Cobertura de código
-- [PIT](https://pitest.org/) - Tests de mutación
-- [Testcontainers](https://www.testcontainers.org/) - Tests con contenedores
-
----
-
-*Esta guía de testing se actualiza regularmente. Última actualización: Enero 2024*
