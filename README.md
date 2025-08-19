@@ -185,6 +185,11 @@ Swagger UI proporciona una interfaz web interactiva para probar todos los endpoi
 2. **El token se enviará automáticamente** en el header Authorization
 3. **Swagger UI** mostrará el tiempo de respuesta de cada petición
 
+Nota: Si estás probando en local, verifica que el server seleccionado sea el de local y no producción: 
+
+<img width="633" height="128" alt="image" src="https://github.com/user-attachments/assets/67213a4c-8968-4f5a-b5b9-a1315dd363b3" />
+
+
 ### 📋 **Organización de Endpoints en Swagger UI**
 
 #### **Grupos de Endpoints:**
@@ -618,5 +623,3 @@ git clone https://github.com/maxif96/conexa-starwars-challenge
 cd starwars-api
 mvn spring-boot:run
 ```
-
-**¡Que la Fuerza esté contigo!**
