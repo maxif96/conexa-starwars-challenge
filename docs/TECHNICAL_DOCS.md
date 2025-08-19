@@ -388,10 +388,25 @@ Cada entidad tiene su propio mapper que maneja las particularidades:
 
 ### Configuración de Seguridad
 
+#### **Arquitectura Moderna**
+- **Spring Security 6.x** compatible (eliminado WebSecurityConfigurerAdapter deprecado)
+- **SecurityFilterChain** para configuración moderna
+- **AntPathRequestMatcher** para patrones de URL
+
 #### **Endpoints Públicos**
 ```java
-.antMatchers("/auth/**", "/swagger-ui/**", "/v2/api-docs", 
-             "/swagger-resources/**", "/webjars/**").permitAll()
+.requestMatchers(
+    new AntPathRequestMatcher("/"),
+    new AntPathRequestMatcher("/api"),
+    new AntPathRequestMatcher("/auth/**"),
+    new AntPathRequestMatcher("/swagger-ui/**"),
+    new AntPathRequestMatcher("/swagger-ui.html"),
+    new AntPathRequestMatcher("/api-docs/**"),
+    new AntPathRequestMatcher("/v3/api-docs/**"),
+    new AntPathRequestMatcher("/swagger-resources/**"),
+    new AntPathRequestMatcher("/webjars/**"),
+    new AntPathRequestMatcher("/h2-console/**")
+).permitAll()
 ```
 
 #### **Endpoints Protegidos**
@@ -399,10 +414,56 @@ Cada entidad tiene su propio mapper que maneja las particularidades:
 .anyRequest().authenticated()
 ```
 
-#### **Configuración JWT**
+#### **Configuración JWT Mejorada**
 ```properties
-jwt.secret=starwars-api-secret-key-2024-very-secure-and-long-secret-key-for-jwt-signing
+# Desarrollo (application-dev.properties)
+jwt.secret=dev-secret-key-2024-very-long-and-secure-for-development-only-minimum-32-chars
 jwt.expiration=86400000
+jwt.issuer=starwars-api-dev
+
+# Producción (application-prod.properties)
+jwt.secret=${JWT_SECRET}  # Variable de entorno obligatoria
+jwt.expiration=${JWT_EXPIRATION:86400000}
+jwt.issuer=${JWT_ISSUER:starwars-api}
+```
+
+#### **Mejoras de Seguridad Implementadas**
+- **Algoritmo HS512** en lugar de HS256
+- **Validación de issuer** en tokens JWT
+- **BCrypt con fuerza 12** para contraseñas
+- **Manejo robusto de errores** de autenticación
+- **JwtAuthenticationEntryPoint** para respuestas seguras
+- **Sin secretos hardcoded** en el código
+
+#### **Configuración en IntelliJ**
+
+##### **Opción 1: Perfil de Desarrollo (Recomendado)**
+1. **Run/Debug Configurations** → **Edit Configurations**
+2. **VM options**: `-Dspring.profiles.active=dev`
+3. **Apply** y **Run**
+
+##### **Opción 2: Variables de Entorno**
+1. **Run/Debug Configurations** → **Edit Configurations**
+2. **Environment variables**:
+   ```
+   JWT_SECRET=dev-secret-key-2024-very-long-and-secure-for-development-only-minimum-32-chars
+   JWT_EXPIRATION=86400000
+   JWT_ISSUER=starwars-api-dev
+   ```
+
+#### **Ejecución desde Terminal**
+
+##### **Desarrollo Local**
+```bash
+# Usar perfil de desarrollo
+./mvnw spring-boot:run -Dspring.profiles.active=dev
+```
+
+##### **Producción**
+```bash
+# Definir JWT_SECRET obligatoriamente
+export JWT_SECRET="tu-clave-super-secreta-de-al-menos-32-caracteres"
+./mvnw spring-boot:run -Dspring.profiles.active=prod
 ```
 
 ---
@@ -720,4 +781,52 @@ Este proyecto ha aprovechado las capacidades de **Inteligencia Artificial Genera
 - **Arquitectura monolítica** diseñada y validada manualmente
 - **Configuración de seguridad** revisada y ajustada manualmente
 - **Integración con SWAPI** implementada con lógica personalizada
+
+---
+
+## Dependencias JWT Actualizadas
+
+### **Migración de JWT 0.9.1 a 0.11.5**
+
+#### **Dependencias Anteriores (Deprecadas)**
+```xml
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt</artifactId>
+    <version>0.9.1</version>
+</dependency>
+```
+
+#### **Dependencias Actuales (Recomendadas)**
+```xml
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.11.5</version>
+</dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>0.11.5</version>
+    <scope>runtime</scope>
+</dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>0.11.5</version>
+    <scope>runtime</scope>
+</dependency>
+```
+
+#### **Beneficios de la Actualización**
+- **Seguridad mejorada**: Algoritmos más robustos y validaciones adicionales
+- **Compatibilidad**: Mejor integración con versiones modernas de Java
+- **Performance**: Optimizaciones en el parsing y validación de tokens
+- **Mantenimiento**: Soporte activo y correcciones de seguridad
+
+#### **Cambios en el Código**
+- **JwtUtil**: Migrado para usar la nueva API de JWT 0.11.5
+- **Algoritmo**: Cambiado de HS256 a HS512 para mayor seguridad
+- **Validación**: Agregada validación de issuer y manejo robusto de errores
+- **Claves**: Uso de `Keys.hmacShaKeyFor()` para generación segura de claves
 

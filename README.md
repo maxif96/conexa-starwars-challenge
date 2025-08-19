@@ -585,19 +585,57 @@ curl -X GET "http://localhost:8080/films/1" \
 4. **Configurar Authorization** → Type: Bearer Token, Token: `{{token}}`
 5. **Usar endpoints** protegidos
 
-## 🔒 Seguridad
+## Seguridad
 
 ### Características de Seguridad
-- **BCrypt** para encriptación de contraseñas
-- **JWT** para autenticación stateless
-- **Spring Security** para autorización
-- **Validación de entrada** en todos los endpoints
-- **Manejo de errores** centralizado y seguro
+- **BCrypt con fuerza 12** para encriptación de contraseñas
+- **JWT con algoritmo HS512** para autenticación stateless
+- **Spring Security 6.x** para autorización (configuración moderna)
+- **Validación robusta de JWT** con issuer validation
+- **Manejo seguro de errores** de autenticación
+- **Configuración por perfiles** (desarrollo vs producción)
+
+### Configuración por Perfiles
+
+#### **Desarrollo Local**
+```properties
+# application-dev.properties
+jwt.secret=dev-secret-key-2024-very-long-and-secure-for-development-only-minimum-32-chars
+jwt.expiration=86400000
+jwt.issuer=starwars-api-dev
+```
+
+#### **Producción**
+```properties
+# application-prod.properties
+jwt.secret=${JWT_SECRET}  # DEBE venir de variable de entorno (Actualmente ya seteadas en Heroku)
+jwt.expiration=${JWT_EXPIRATION:86400000}
+jwt.issuer=${JWT_ISSUER:starwars-api}
+```
+
+### Configuración en IntelliJ
+
+#### **Opción 1: Perfil de Desarrollo (Recomendado)**
+1. **Run/Debug Configurations** → **Edit Configurations**
+2. **VM options**: `-Dspring.profiles.active=dev`
+3. **Apply** y **Run**
+
+#### **Opción 2: Variables de Entorno**
+1. **Run/Debug Configurations** → **Edit Configurations**
+2. **Environment variables**:
+   ```
+   JWT_SECRET=dev-secret-key-2024-very-long-and-secure-for-development-only-minimum-32-chars
+   JWT_EXPIRATION=86400000
+   JWT_ISSUER=starwars-api-dev
+   ```
 
 ### Endpoints Públicos
+- `/` - Página de inicio
+- `/api` - Información de la API
 - `/auth/**` - Autenticación
-- `/swagger-ui/**` - Documentación
-- `/v2/api-docs` - Especificación OpenAPI
+- `/swagger-ui/**` - Documentación Swagger
+- `/api-docs/**` - Especificación OpenAPI
+- `/h2-console/**` - Consola H2 (solo desarrollo)
 
 ### Endpoints Protegidos
 - `/people/**` - Gestión de personajes
