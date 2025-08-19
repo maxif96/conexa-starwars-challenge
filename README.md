@@ -60,21 +60,47 @@ Nuestra API actúa como un **wrapper inteligente** de SWAPI, proporcionando:
 
 ## Arquitectura del Proyecto
 
-### Estructura de Directorios
+### Estructura de Directorios (Por Funcionalidad)
 ```
 src/main/java/com/starwars/
-├── config/          # Configuraciones (Security, OpenAPI)
-├── controller/      # Controladores REST
-├── dto/            # Objetos de transferencia de datos
-│   ├── api/        # DTOs para respuestas de SWAPI
-│   ├── response/   # DTOs de respuesta de la aplicación
-│   └── authentication/ # DTOs de autenticación
-├── entity/         # Entidades JPA
-├── exception/      # Manejo centralizado de excepciones
-├── mapper/         # Mapeadores MapStruct
-├── repository/     # Repositorios de datos
-├── security/       # Configuración de seguridad JWT
-└── service/        # Lógica de negocio
+├── auth/           # Funcionalidad de autenticación
+│   ├── controller/ # Controlador de autenticación
+│   ├── service/    # Servicios de autenticación
+│   ├── dto/        # DTOs de autenticación
+│   ├── entity/     # Entidad User
+│   └── repository/ # Repositorio de usuarios
+├── people/         # Funcionalidad de personajes
+│   ├── controller/ # Controlador de personajes
+│   ├── service/    # Servicio de personajes
+│   ├── dto/        # DTOs de personajes
+│   ├── mapper/     # Mapeador de personajes
+│   └── repository/ # Repositorio de personajes
+├── films/          # Funcionalidad de películas
+│   ├── controller/ # Controlador de películas
+│   ├── service/    # Servicio de películas
+│   ├── dto/        # DTOs de películas
+│   ├── mapper/     # Mapeador de películas
+│   └── repository/ # Repositorio de películas
+├── starships/      # Funcionalidad de naves espaciales
+│   ├── controller/ # Controlador de naves
+│   ├── service/    # Servicio de naves
+│   ├── dto/        # DTOs de naves
+│   ├── mapper/     # Mapeador de naves
+│   └── repository/ # Repositorio de naves
+├── vehicles/       # Funcionalidad de vehículos
+│   ├── controller/ # Controlador de vehículos
+│   ├── service/    # Servicio de vehículos
+│   ├── dto/        # DTOs de vehículos
+│   ├── mapper/     # Mapeador de vehículos
+│   └── repository/ # Repositorio de vehículos
+└── shared/         # Componentes compartidos
+    ├── config/     # Configuraciones (Security, OpenAPI)
+    ├── controller/ # Controladores compartidos (Home)
+    ├── dto/        # DTOs compartidos (PageResponse, API base)
+    ├── exception/  # Manejo centralizado de excepciones
+    ├── mapper/     # Mapeadores compartidos
+    ├── security/   # Configuración de seguridad JWT
+    └── service/    # Servicios base compartidos
 ```
 
 ### Patrones de diseño y arquitectónicos aplicados
@@ -83,6 +109,14 @@ src/main/java/com/starwars/
 - **Repository Pattern**: Abstracción de acceso a datos
 - **Service Layer**: Lógica de negocio centralizada
 - **Global Exception Handler**: Manejo centralizado de errores
+
+### Estructura por Funcionalidad (Feature-Based Architecture)
+- **Organización Vertical**: Cada funcionalidad principal tiene su propio paquete autocontenido
+- **Cohesión Alta**: Todos los componentes relacionados están agrupados lógicamente
+- **Bajo Acoplamiento**: Las funcionalidades son independientes entre sí
+- **Escalabilidad**: Fácil agregar nuevas funcionalidades sin afectar las existentes
+- **Mantenibilidad**: Código más fácil de navegar y entender
+- **Migración a Microservicios**: Estructura preparada para futuras migraciones
 
 ## Sistema de Autenticación
 

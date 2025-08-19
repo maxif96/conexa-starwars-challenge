@@ -1,7 +1,7 @@
 package com.starwars.service;
 
-import com.starwars.entity.User;
-import com.starwars.repository.UserRepository;
+import com.starwars.auth.entity.User;
+import com.starwars.auth.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,7 +22,7 @@ public class UserDetailsServiceImplUnitTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private UserDetailsServiceImpl userDetailsService;
+    private com.starwars.auth.service.UserDetailsServiceImpl userDetailsService;
 
     @Test
     public void loadUserByUsername_ExistingUser_ShouldReturnUserDetails() {

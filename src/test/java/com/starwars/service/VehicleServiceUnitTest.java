@@ -1,11 +1,12 @@
 package com.starwars.service;
 
-import com.starwars.dto.api.*;
-import com.starwars.dto.response.PageResponseDto;
-import com.starwars.dto.response.VehicleResponseDto;
-import com.starwars.exception.ResourceNotFoundException;
-import com.starwars.mapper.VehicleMapper;
-import com.starwars.service.VehicleService;
+import com.starwars.shared.dto.api.*;
+import com.starwars.shared.dto.PageResponseDto;
+import com.starwars.vehicles.dto.VehicleApiDto;
+import com.starwars.vehicles.dto.VehicleResponseDto;
+import com.starwars.shared.exception.ResourceNotFoundException;
+import com.starwars.vehicles.mapper.VehicleMapper;
+import com.starwars.vehicles.service.VehicleService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

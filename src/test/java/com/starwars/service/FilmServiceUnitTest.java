@@ -1,11 +1,12 @@
 package com.starwars.service;
 
-import com.starwars.dto.api.*;
-import com.starwars.dto.response.PageResponseDto;
-import com.starwars.dto.response.FilmResponseDto;
-import com.starwars.exception.ResourceNotFoundException;
-import com.starwars.mapper.FilmMapper;
-import com.starwars.service.FilmService;
+import com.starwars.films.dto.FilmApiDto;
+import com.starwars.shared.dto.api.*;
+import com.starwars.shared.dto.PageResponseDto;
+import com.starwars.films.dto.FilmResponseDto;
+import com.starwars.shared.exception.ResourceNotFoundException;
+import com.starwars.films.mapper.FilmMapper;
+import com.starwars.films.service.FilmService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

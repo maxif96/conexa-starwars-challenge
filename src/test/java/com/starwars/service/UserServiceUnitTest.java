@@ -1,9 +1,9 @@
 package com.starwars.service;
 
-import com.starwars.dto.authentication.RegisterRequest;
-import com.starwars.entity.User;
-import com.starwars.repository.UserRepository;
-import com.starwars.security.JwtUtil;
+import com.starwars.auth.dto.RegisterRequest;
+import com.starwars.auth.entity.User;
+import com.starwars.auth.repository.UserRepository;
+import com.starwars.shared.security.JwtUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -32,7 +32,7 @@ public class UserServiceUnitTest {
     private JwtUtil jwtUtil;
 
     @InjectMocks
-    private UserService userService;
+    private com.starwars.auth.service.UserService userService;
 
     @Test
     public void registerUser_ValidRequest_ShouldReturnJwtToken() {

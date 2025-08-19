@@ -1,11 +1,12 @@
 package com.starwars.service;
 
-import com.starwars.dto.api.*;
-import com.starwars.dto.response.PageResponseDto;
-import com.starwars.dto.response.StarshipResponseDto;
-import com.starwars.exception.ResourceNotFoundException;
-import com.starwars.mapper.StarshipMapper;
-import com.starwars.service.StarshipService;
+import com.starwars.shared.dto.api.*;
+import com.starwars.shared.dto.PageResponseDto;
+import com.starwars.starships.dto.StarshipApiDto;
+import com.starwars.starships.dto.StarshipResponseDto;
+import com.starwars.shared.exception.ResourceNotFoundException;
+import com.starwars.starships.mapper.StarshipMapper;
+import com.starwars.starships.service.StarshipService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

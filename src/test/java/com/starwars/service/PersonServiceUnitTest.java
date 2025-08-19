@@ -1,11 +1,12 @@
 package com.starwars.service;
 
-import com.starwars.dto.api.*;
-import com.starwars.dto.response.PageResponseDto;
-import com.starwars.dto.response.PersonResponseDto;
-import com.starwars.exception.ResourceNotFoundException;
-import com.starwars.mapper.PersonMapper;
-import com.starwars.service.PersonService;
+import com.starwars.people.dto.PersonApiDto;
+import com.starwars.shared.dto.api.*;
+import com.starwars.shared.dto.PageResponseDto;
+import com.starwars.people.dto.PersonResponseDto;
+import com.starwars.shared.exception.ResourceNotFoundException;
+import com.starwars.people.mapper.PersonMapper;
+import com.starwars.people.service.PersonService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

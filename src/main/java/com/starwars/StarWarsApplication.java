@@ -29,9 +29,8 @@ public class StarWarsApplication {
     CommandLineRunner run() {
         return args -> {
             log.info("Aplicación Star Wars API iniciada correctamente");
+            log.info("Estructura por funcionalidad implementada exitosamente");
             log.info("Usuarios disponibles: admin/admin123, user/user123, test/test123");
         };
     }
-
-
 }

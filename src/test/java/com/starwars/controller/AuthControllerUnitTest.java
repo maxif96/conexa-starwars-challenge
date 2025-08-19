@@ -1,12 +1,12 @@
 package com.starwars.controller;
 
-import com.starwars.dto.authentication.AuthenticationRequest;
-import com.starwars.dto.authentication.AuthenticationResponse;
-import com.starwars.dto.authentication.RegisterRequest;
-import com.starwars.dto.authentication.RegisterResponse;
-import com.starwars.security.JwtUtil;
-import com.starwars.service.UserDetailsServiceImpl;
-import com.starwars.service.UserService;
+import com.starwars.auth.dto.AuthenticationRequest;
+import com.starwars.auth.dto.AuthenticationResponse;
+import com.starwars.auth.dto.RegisterRequest;
+import com.starwars.auth.dto.RegisterResponse;
+import com.starwars.shared.security.JwtUtil;
+import com.starwars.auth.service.UserDetailsServiceImpl;
+import com.starwars.auth.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -42,7 +42,7 @@ public class AuthControllerUnitTest {
     private JwtUtil jwtUtil;
 
     @InjectMocks
-    private AuthController authController;
+    private com.starwars.auth.controller.AuthController authController;
 
     @Test
     public void createAuthenticationToken_ValidCredentials_ShouldReturnJwtToken() {
