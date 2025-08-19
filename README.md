@@ -623,5 +623,3 @@ git clone https://github.com/maxif96/conexa-starwars-challenge
 cd starwars-api
 mvn spring-boot:run
 ```
-
-**¡Que la Fuerza esté contigo!**
