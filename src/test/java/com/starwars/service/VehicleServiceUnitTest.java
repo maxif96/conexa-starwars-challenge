@@ -133,7 +133,6 @@ public class VehicleServiceUnitTest {
                 createApiDetailResult("6", vehicleApiDto2)
         );
 
-        // CORRECCIÓN: Usar ApiPageResponse para casos sin filtro de nombre
         ApiPageResponse<VehicleApiDto> apiPageResponse = createApiPageResponse(resultList, 4, 39, "next_url", null);
 
         VehicleResponseDto responseDto1 = createVehicleResponseDto("4", "Sand Crawler", "30", "36.8");
@@ -174,7 +173,6 @@ public class VehicleServiceUnitTest {
         VehicleApiDto vehicleApiDto = createVehicleApiDto("4", "Sand Crawler", "30", "36.8");
         List<ApiDetailResult<VehicleApiDto>> resultList = Arrays.asList(createApiDetailResult("4", vehicleApiDto));
 
-        // CORRECCIÓN: Usar ApiPageResponse para nombres vacíos (se trata como null)
         ApiPageResponse<VehicleApiDto> apiPageResponse = createApiPageResponse(resultList, 1, 1, null, null);
 
         VehicleResponseDto responseDto = createVehicleResponseDto("4", "Sand Crawler", "30", "36.8");

@@ -7,25 +7,20 @@ import com.starwars.exception.ResourceNotFoundException;
 import com.starwars.mapper.FilmMapper;
 import com.starwars.service.base.BaseStarWarsService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class FilmService extends BaseStarWarsService {
 
     private final FilmMapper filmMapper;
-
-    @Autowired
-    public FilmService(FilmMapper filmMapper) {
-        this.filmMapper = filmMapper;
-    }
 
     public PageResponseDto<FilmResponseDto> listOrSearchFilms(String title, int page, int limit) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + "/films")

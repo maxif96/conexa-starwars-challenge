@@ -7,7 +7,7 @@ import com.starwars.exception.ResourceNotFoundException;
 import com.starwars.mapper.StarshipMapper;
 import com.starwars.service.base.BaseStarWarsService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,14 +17,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class StarshipService extends BaseStarWarsService {
 
     private final StarshipMapper starshipMapper;
-
-    @Autowired
-    public StarshipService(StarshipMapper starshipMapper) {
-        this.starshipMapper = starshipMapper;
-    }
 
     public PageResponseDto<StarshipResponseDto> listOrSearchStarships(String name, int page, int limit) {
         if (name != null && !name.trim().isEmpty()) {

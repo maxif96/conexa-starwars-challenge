@@ -1,5 +1,6 @@
 package com.starwars.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.HashMap;
 import java.util.Map;
 
+@Hidden
 @RestController
 @CrossOrigin(origins = "*")
 public class HomeController {
@@ -241,33 +243,33 @@ public class HomeController {
         html.append("            <div class=\"endpoint-list\">");
         html.append("                                <div class=\"endpoint-item\">");
         html.append("                    <strong>Autenticación</strong>");
-        html.append("                    <code>POST /api/v1/auth/login</code><br>");
-        html.append("                    <code>POST /api/v1/auth/register</code><br>");
-        html.append("                    <code>GET /api/v1/auth/check-username/{username}</code>");
+        html.append("                    <code>POST /auth/login</code><br>");
+        html.append("                    <code>POST /auth/register</code><br>");
+        html.append("                    <code>GET /auth/check-username/{username}</code>");
         html.append("                </div>");
         html.append("                <div class=\"endpoint-item\">");
         html.append("                    <strong>Personajes</strong>");
-        html.append("                    <code>GET /api/v1/people</code><br>");
-        html.append("                    <code>GET /api/v1/people/{id}</code><br>");
-        html.append("                    <code>GET /api/v1/people?name={name}&page={page}&limit={limit}</code>");
+        html.append("                    <code>GET /people</code><br>");
+        html.append("                    <code>GET /people/{id}</code><br>");
+        html.append("                    <code>GET /people?name={name}&page={page}&limit={limit}</code>");
         html.append("                </div>");
         html.append("                <div class=\"endpoint-item\">");
         html.append("                    <strong>Películas</strong>");
-        html.append("                    <code>GET /api/v1/films</code><br>");
-        html.append("                    <code>GET /api/v1/films/{id}</code><br>");
-        html.append("                    <code>GET /api/v1/films?name={name}&page={page}&limit={limit}</code>");
+        html.append("                    <code>GET /films</code><br>");
+        html.append("                    <code>GET /films/{id}</code><br>");
+        html.append("                    <code>GET /films?name={name}&page={page}&limit={limit}</code>");
         html.append("                </div>");
         html.append("                <div class=\"endpoint-item\">");
         html.append("                    <strong>Naves Espaciales</strong>");
-        html.append("                    <code>GET /api/v1/starships</code><br>");
-        html.append("                    <code>GET /api/v1/starships/{id}</code><br>");
-        html.append("                    <code>GET /api/v1/starships?name={name}&page={page}&limit={limit}</code>");
+        html.append("                    <code>GET /starships</code><br>");
+        html.append("                    <code>GET /starships/{id}</code><br>");
+        html.append("                    <code>GET /starships?name={name}&page={page}&limit={limit}</code>");
         html.append("                </div>");
         html.append("                <div class=\"endpoint-item\">");
         html.append("                    <strong>Vehículos</strong>");
-        html.append("                    <code>GET /api/v1/vehicles</code><br>");
-        html.append("                    <code>GET /api/v1/vehicles/{id}</code><br>");
-        html.append("                    <code>GET /api/v1/vehicles?name={name}&page={page}&limit={limit}</code>");
+        html.append("                    <code>GET /vehicles</code><br>");
+        html.append("                    <code>GET /vehicles/{id}</code><br>");
+        html.append("                    <code>GET /vehicles?name={name}&page={page}&limit={limit}</code>");
         html.append("                </div>");
         html.append("            </div>");
         html.append("        </div>");

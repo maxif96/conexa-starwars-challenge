@@ -439,7 +439,7 @@ public class GlobalExceptionHandler {
     "status": 404,
     "error": "No Encontrado",
     "message": "Person no encontrado con id : '999'",
-    "path": "/api/v1/people/999"
+    "path": "/people/999"
 }
 ```
 
@@ -562,7 +562,6 @@ jwt.expiration=86400000
 ```properties
 # Server Configuration
 server.port=8080
-server.servlet.context-path=/api/v1
 ```
 
 ### Configuraciones de Spring

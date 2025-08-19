@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +19,10 @@ import javax.validation.constraints.Min;
 @RequestMapping("/people")
 @Tag(name = "C. People")
 @Validated
+@RequiredArgsConstructor
 public class PeopleController {
 
-    @Autowired
-    private PersonService personService;
+    private final PersonService personService;
 
     @GetMapping
     @Operation(

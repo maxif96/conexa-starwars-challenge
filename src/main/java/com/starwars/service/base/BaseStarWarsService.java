@@ -19,7 +19,7 @@ public abstract class BaseStarWarsService {
     @Autowired
     protected RestTemplate restTemplate;
 
-    @Value("${swapi.api.base-url:https://swapi.tech/api}")
+    @Value("${swapi.api.base-url}")
     protected String baseUrl;
 
     /**

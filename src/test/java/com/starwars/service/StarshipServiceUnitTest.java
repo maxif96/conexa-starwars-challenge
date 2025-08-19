@@ -154,7 +154,6 @@ public class StarshipServiceUnitTest {
         StarshipApiDto starshipApiDto = createStarshipApiDto("10", "Millennium Falcon", "4", "34.37");
         List<ApiDetailResult<StarshipApiDto>> resultList = Arrays.asList(createApiDetailResult("10", starshipApiDto));
 
-        // CORRECCIÓN: Usar ApiPageResponse para nombres vacíos (se trata como null)
         ApiPageResponse<StarshipApiDto> apiPageResponse = createApiPageResponse(resultList, 1, 1, null, null);
 
         StarshipResponseDto responseDto = createStarshipResponseDto("10", "Millennium Falcon", "4", "34.37");

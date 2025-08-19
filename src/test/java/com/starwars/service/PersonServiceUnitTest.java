@@ -276,7 +276,6 @@ public class PersonServiceUnitTest {
     // Métodos auxiliares para crear objetos de prueba
     private PersonApiDto createPersonApiDto(String uid, String name) {
         PersonApiDto dto = new PersonApiDto();
-        // Asumiendo que PersonApiDto tiene estos campos basándome en el contexto
         ReflectionTestUtils.setField(dto, "name", name);
         ReflectionTestUtils.setField(dto, "height", "172");
         ReflectionTestUtils.setField(dto, "mass", "77");

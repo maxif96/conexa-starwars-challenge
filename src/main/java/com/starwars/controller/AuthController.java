@@ -10,6 +10,7 @@ import com.starwars.security.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,22 +26,13 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 @Tag(name = "A. Authentication")
 @Validated
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsServiceImpl userDetailsService;
     private final UserService userService;
     private final JwtUtil jwtUtil;
-
-    public AuthController(AuthenticationManager authenticationManager,
-                         UserDetailsServiceImpl userDetailsService,
-                         UserService userService,
-                         JwtUtil jwtUtil) {
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.userService = userService;
-        this.jwtUtil = jwtUtil;
-    }
 
     @PostMapping("/login")
     @Operation(summary = "Iniciar sesión", description = "Autentica un usuario existente y devuelve un token JWT")

@@ -7,25 +7,20 @@ import com.starwars.exception.ResourceNotFoundException;
 import com.starwars.mapper.PersonMapper;
 import com.starwars.service.base.BaseStarWarsService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PersonService extends BaseStarWarsService {
 
     private final PersonMapper personMapper;
-
-    @Autowired
-    public PersonService(PersonMapper personMapper) {
-        this.personMapper = personMapper;
-    }
 
     public PageResponseDto<PersonResponseDto> listOrSearchPeople(String name, int page, int limit) {
         if (name != null && !name.trim().isEmpty()) {

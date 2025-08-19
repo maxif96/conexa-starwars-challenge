@@ -96,22 +96,22 @@ La aplicación incluye usuarios predefinidos para testing:
 | `test`   | `test123`  | Usuario de pruebas |
 
 ### Flujo de Autenticación
-1. **Registro**: `POST /api/v1/auth/register`
-2. **Login**: `POST /api/v1/auth/login`
-3. **Verificación**: `GET /api/v1/auth/check-username/{username}`
+1. **Registro**: `POST /auth/register`
+2. **Login**: `POST /auth/login`
+3. **Verificación**: `GET /auth/check-username/{username}`
 4. **Uso**: Incluir token en header `Authorization: Bearer {token}`
 
 ## URLs de Acceso
 
 ### 🌐 **Local Development**
 - **Página de Inicio**: `http://localhost:8080/`
-- **Base URL**: `http://localhost:8080/api/v1`
+- **Base URL**: `http://localhost:8080`
 - **Swagger UI**: `http://localhost:8080/swagger-ui/index.html`
 - **H2 Console**: `http://localhost:8080/h2-console`
 
 ### 🚀 **Heroku Production**
 - **Página de Inicio**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/`
-- **Base URL**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api/v1`
+- **Base URL**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com`
 - **Swagger UI**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui/index.html`
 - **API Docs**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api-docs`
 
@@ -261,7 +261,7 @@ Swagger UI proporciona una interfaz web interactiva para probar todos los endpoi
 
 **Local:**
 ```http
-POST http://localhost:8080/api/v1/auth/register
+POST http://localhost:8080/auth/register
 Content-Type: application/json
 
 {
@@ -273,7 +273,7 @@ Content-Type: application/json
 
 **Heroku:**
 ```http
-POST https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api/v1/auth/register
+POST https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/auth/register
 Content-Type: application/json
 
 {
@@ -294,7 +294,7 @@ Content-Type: application/json
 
 #### 2. Inicio de Sesión
 ```http
-POST http://localhost:8080/api/v1/auth/login
+POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
@@ -312,7 +312,7 @@ Content-Type: application/json
 
 #### 3. Verificar Disponibilidad de Username
 ```http
-GET http://localhost:8080/api/v1/auth/check-username/{username}
+GET http://localhost:8080/auth/check-username/{username}
 ```
 
 **Respuesta:**
@@ -325,84 +325,84 @@ GET http://localhost:8080/api/v1/auth/check-username/{username}
 
 **Local:**
 ```http
-GET http://localhost:8080/api/v1/people?page=1&limit=10
-GET http://localhost:8080/api/v1/people?page=2&limit=5
+GET http://localhost:8080/people?page=1&limit=10
+GET http://localhost:8080/people?page=2&limit=5
 ```
 
 **Heroku:**
 ```http
-GET https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api/v1/people?page=1&limit=10
-GET https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api/v1/people?page=2&limit=5
+GET https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/people?page=1&limit=10
+GET https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/people?page=2&limit=5
 ```
 
 #### Búsqueda por Nombre
 ```http
-GET http://localhost:8080/api/v1/people?name=skywalker
-GET http://localhost:8080/api/v1/people?name=L
-GET http://localhost:8080/api/v1/people?name=r2
+GET http://localhost:8080/people?name=skywalker
+GET http://localhost:8080/people?name=L
+GET http://localhost:8080/people?name=r2
 ```
 
 #### Obtener por ID
 ```http
-GET http://localhost:8080/api/v1/people/1
+GET http://localhost:8080/people/1
 ```
 
 ###  Films (Películas)
 
 #### Listado Paginado
 ```http
-GET http://localhost:8080/api/v1/films?page=1&limit=10
-GET http://localhost:8080/api/v1/films?page=1&limit=3
+GET http://localhost:8080/films?page=1&limit=10
+GET http://localhost:8080/films?page=1&limit=3
 ```
 
 #### Búsqueda por Título
 ```http
-GET http://localhost:8080/api/v1/films?title=hope
-GET http://localhost:8080/api/v1/films?title=jedi
+GET http://localhost:8080/films?title=hope
+GET http://localhost:8080/films?title=jedi
 ```
 
 #### Obtener por ID
 ```http
-GET http://localhost:8080/api/v1/films/1
+GET http://localhost:8080/films/1
 ```
 
 ### Starships (Naves Espaciales)
 
 #### Listado Paginado
 ```http
-GET http://localhost:8080/api/v1/starships
-GET http://localhost:8080/api/v1/starships?page=2
+GET http://localhost:8080/starships
+GET http://localhost:8080/starships?page=2
 ```
 
 #### Búsqueda por Nombre
 ```http
-GET http://localhost:8080/api/v1/starships?name=destroyer
-GET http://localhost:8080/api/v1/starships?name=falcon
+GET http://localhost:8080/starships?name=destroyer
+GET http://localhost:8080/starships?name=falcon
 ```
 
 #### Obtener por ID
 ```http
-GET http://localhost:8080/api/v1/starships/9
-GET http://localhost:8080/api/v1/starships/10
+GET http://localhost:8080/starships/9
+GET http://localhost:8080/starships/10
 ```
 
 ###  Vehicles (Vehículos)
 
 #### Listado Paginado
 ```http
-GET http://localhost:8080/api/v1/vehicles
-GET http://localhost:8080/api/v1/vehicles?page=1&limit=5
+GET http://localhost:8080/vehicles
+GET http://localhost:8080/vehicles?page=1&limit=5
 ```
 
 #### Búsqueda por Nombre
 ```http
-GET http://localhost:8080/api/v1/vehicles?name=speeder
-GET http://localhost:8080/api/v1/vehicles?name=crawler
+GET http://localhost:8080/vehicles?name=speeder
+GET http://localhost:8080/vehicles?name=crawler
 ```
 
 #### Obtener por ID
 ```http
-GET http://localhost:8080/api/v1/vehicles/4
+GET http://localhost:8080/vehicles/4
 ```
 
 ## Configuración y Ejecución
@@ -414,7 +414,7 @@ GET http://localhost:8080/api/v1/vehicles/4
 
 ### Configuración
 - **Puerto**: 8080
-- **Context Path**: `/api/v1`
+- **Context Path**: ``
 - **Base de datos**: H2 en memoria
 - **JWT Secret**: Configurado en `application.properties`
 
@@ -488,7 +488,7 @@ mvn test
     "status": 404,
     "error": "No Encontrado",
     "message": "Person no encontrado con id : '999'",
-    "path": "/api/v1/people/999"
+    "path": "/people/999"
 }
 ```
 
@@ -559,22 +559,22 @@ Cuando se busca por nombre, SWAPI devuelve **múltiples resultados sin paginar**
 ### Ejemplo Completo con cURL
 ```bash
 # 1. Login y obtener token
-TOKEN=$(curl -s -X POST http://localhost:8080/api/v1/auth/login \
+TOKEN=$(curl -s -X POST http://localhost:8080/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin123"}' | \
   jq -r '.token')
 
 # 2. Buscar personajes con el nombre "Luke"
-curl -X GET "http://localhost:8080/api/v1/people?name=Luke&page=1&limit=5" \
+curl -X GET "http://localhost:8080/people?name=Luke&page=1&limit=5" \
   -H "Authorization: Bearer $TOKEN"
 
 # 3. Obtener película por ID
-curl -X GET "http://localhost:8080/api/v1/films/1" \
+curl -X GET "http://localhost:8080/films/1" \
   -H "Authorization: Bearer $TOKEN"
 ```
 
 ### Ejemplo con Postman
-1. **Configurar Collection** con variable `{{base_url}}` = `http://localhost:8080/api/v1`
+1. **Configurar Collection** con variable `{{base_url}}` = `http://localhost:8080`
 2. **Login** → `POST {{base_url}}/auth/login`
 3. **Extraer token** de la respuesta
 4. **Configurar Authorization** → Type: Bearer Token, Token: `{{token}}`
@@ -590,15 +590,15 @@ curl -X GET "http://localhost:8080/api/v1/films/1" \
 - **Manejo de errores** centralizado y seguro
 
 ### Endpoints Públicos
-- `/api/v1/auth/**` - Autenticación
-- `/api/v1/swagger-ui/**` - Documentación
-- `/api/v1/v2/api-docs` - Especificación OpenAPI
+- `/auth/**` - Autenticación
+- `/swagger-ui/**` - Documentación
+- `/v2/api-docs` - Especificación OpenAPI
 
 ### Endpoints Protegidos
-- `/api/v1/people/**` - Gestión de personajes
-- `/api/v1/films/**` - Gestión de películas
-- `/api/v1/starships/**` - Gestión de naves
-- `/api/v1/vehicles/**` - Gestión de vehículos
+- `/people/**` - Gestión de personajes
+- `/films/**` - Gestión de películas
+- `/starships/**` - Gestión de naves
+- `/vehicles/**` - Gestión de vehículos
 
 ## Documentación Adicional
 

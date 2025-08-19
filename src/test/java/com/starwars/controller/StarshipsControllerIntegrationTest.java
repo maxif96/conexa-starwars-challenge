@@ -96,7 +96,6 @@ public class StarshipsControllerIntegrationTest {
                 "  ]\n" +
                 "}";
 
-        // CORRECCIÓN: Usar urlPathEqualTo con queryParam separados
         stubFor(WireMock.get(urlPathEqualTo("/api/starships"))
                 .withQueryParam("page", equalTo("1"))
                 .withQueryParam("limit", equalTo("10"))
@@ -106,7 +105,7 @@ public class StarshipsControllerIntegrationTest {
                         .withHeader("Content-Type", "application/json")
                         .withBody(mockApiResponse)));
 
-        // Act & Assert - CORRECCIÓN: usar /starships en lugar de /api/v1/starships
+        // Act & Assert
         mockMvc.perform(get("/starships")
                         .param("page", "1")
                         .param("limit", "10"))
@@ -146,7 +145,6 @@ public class StarshipsControllerIntegrationTest {
                 "  ]\n" +
                 "}";
 
-        // CORRECCIÓN: Usar queryParam separados
         stubFor(WireMock.get(urlPathEqualTo("/api/starships"))
                 .withQueryParam("name", equalTo("Falcon"))
                 .willReturn(aResponse()
@@ -188,7 +186,6 @@ public class StarshipsControllerIntegrationTest {
                 "  }\n" +
                 "}";
 
-        // CORRECCIÓN: Solo el path, sin query params
         stubFor(WireMock.get(urlPathEqualTo("/api/starships/10"))
                 .willReturn(aResponse()
                         .withStatus(200)

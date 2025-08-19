@@ -82,11 +82,11 @@ public class FilmsControllerIntegrationTest {
                         .withBody(mockApiResponse)));
 
         // Act & Assert
-        mockMvc.perform(get("/films/1")  // Cambié de "/api/v1/films/1" a "/films/1"
+        mockMvc.perform(get("/films/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is("1")))  // Agregué validación del ID
+                .andExpect(jsonPath("$.id", is("1")))
                 .andExpect(jsonPath("$.title", is("A New Hope")))
                 .andExpect(jsonPath("$.episodeId", is(4)))
                 .andExpect(jsonPath("$.director", is("George Lucas")))
@@ -124,7 +124,7 @@ public class FilmsControllerIntegrationTest {
                         .withBody(mockApiResponse)));
 
         // Act & Assert
-        mockMvc.perform(get("/films")  // Cambié de "/api/v1/films" a "/films"
+        mockMvc.perform(get("/films")
                         .param("title", "Hope")
                         .param("page", "1")
                         .param("limit", "10")
@@ -164,7 +164,7 @@ public class FilmsControllerIntegrationTest {
                         .withBody(mockApiResponse)));
 
         // Act & Assert
-        mockMvc.perform(get("/films/1")  // Cambié de "/api/v1/films/1" a "/films/1"
+        mockMvc.perform(get("/films/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -191,17 +191,17 @@ public class FilmsControllerIntegrationTest {
                         .withBody(mockApiResponse)));
 
         // Act & Assert
-        mockMvc.perform(get("/films/999")  // Cambié de "/api/v1/films/999" a "/films/999"
+        mockMvc.perform(get("/films/999")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message", containsString("Film")));  // Ajusté el mensaje esperado
+                .andExpect(jsonPath("$.message", containsString("Film")));
     }
 
     @Test
     public void listFilms_WithInvalidPagination_ShouldReturnBadRequest() throws Exception {
         // Act & Assert
-        mockMvc.perform(get("/films")  // Cambié de "/api/v1/films" a "/films"
+        mockMvc.perform(get("/films")
                         .param("page", "0")
                         .param("limit", "10")
                         .contentType(MediaType.APPLICATION_JSON))

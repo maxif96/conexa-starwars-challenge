@@ -96,7 +96,6 @@ public class VehiclesControllerIntegrationTest {
                 "  ]\n" +
                 "}";
 
-        // CORRECCIÓN: Usar urlPathEqualTo con queryParam separados
         stubFor(WireMock.get(urlPathEqualTo("/api/vehicles"))
                 .withQueryParam("page", equalTo("1"))
                 .withQueryParam("limit", equalTo("10"))
@@ -106,7 +105,7 @@ public class VehiclesControllerIntegrationTest {
                         .withHeader("Content-Type", "application/json")
                         .withBody(mockApiResponse)));
 
-        // Act & Assert - CORRECCIÓN: usar /vehicles en lugar de /api/v1/vehicles
+        // Act & Assert
         mockMvc.perform(get("/vehicles")
                         .param("page", "1")
                         .param("limit", "10"))
@@ -146,7 +145,6 @@ public class VehiclesControllerIntegrationTest {
                 "  ]\n" +
                 "}";
 
-        // CORRECCIÓN: Usar queryParam separados
         stubFor(WireMock.get(urlPathEqualTo("/api/vehicles"))
                 .withQueryParam("name", equalTo("Sand"))
                 .willReturn(aResponse()
@@ -188,7 +186,6 @@ public class VehiclesControllerIntegrationTest {
                 "  }\n" +
                 "}";
 
-        // CORRECCIÓN: Solo el path, sin query params
         stubFor(WireMock.get(urlPathEqualTo("/api/vehicles/4"))
                 .willReturn(aResponse()
                         .withStatus(200)

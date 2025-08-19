@@ -7,7 +7,7 @@ import com.starwars.exception.ResourceNotFoundException;
 import com.starwars.mapper.VehicleMapper;
 import com.starwars.service.base.BaseStarWarsService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,14 +17,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class VehicleService extends BaseStarWarsService {
 
     private final VehicleMapper vehicleMapper;
-
-    @Autowired
-    public VehicleService(VehicleMapper vehicleMapper) {
-        this.vehicleMapper = vehicleMapper;
-    }
 
     public PageResponseDto<VehicleResponseDto> listOrSearchVehicles(String name, int page, int limit) {
         if (name != null && !name.trim().isEmpty()) {
