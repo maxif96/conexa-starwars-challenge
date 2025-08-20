@@ -58,7 +58,7 @@ Nuestra API actúa como un **wrapper inteligente** de SWAPI, proporcionando:
 - **MapStruct** para mapeo de objetos
 - **Swagger/OpenAPI 3** para documentación
 - **Lombok** para reducir boilerplate
-- **JUnit 4/5 + Mockito** para testing
+- **JUnit 5 + Mockito** para testing
 - **WireMock** para tests de integración
 
 ## Arquitectura del Proyecto
@@ -494,13 +494,13 @@ El proyecto implementa una estrategia de testing híbrida que combina:
 
 #### Tests Unitarios (`src/test/java/com/starwars/service/`)
 - **Objetivo**: Probar lógica de negocio en aislamiento
-- **Tecnología**: JUnit 4 + Mockito
+- **Tecnología**: JUnit 5 + Mockito
 - **Características**: Rápidos, sin contexto Spring, mocks de dependencias
 - **Ubicación**: `*ServiceUnitTest.java`
 
 #### Tests de Integración (`src/test/java/com/starwars/controller/`)
 - **Objetivo**: Probar flujo completo de controladores
-- **Tecnología**: JUnit 4 + Spring Boot Test + WireMock
+- **Tecnología**: JUnit 5 + Spring Boot Test + WireMock
 - **Características**: Contexto Spring completo, simulación de API externa
 - **Ubicación**: `*ControllerIntegrationTest.java`
 
