@@ -716,7 +716,10 @@ public class OpenApiConfig {
 ### Cobertura de Tests
 - **Tests Unitarios**: 6 clases (Person, Film, Starship, Vehicle, User, UserDetails)
 - **Tests de Integración**: 5 clases (People, Films, Starships, Vehicles, Auth)
-- **Cobertura Total**: ~90-95%
+- **Cobertura Total (Servicios y controladores)**: ~90-95%
+
+  <img width="408" height="268" alt="image" src="https://github.com/user-attachments/assets/1f9bcdea-24e3-45be-a601-aaf19a6d6974" />
+
 
 ### Escalabilidad
 - **Rate limiting**: No implementado (se puede agregar)
