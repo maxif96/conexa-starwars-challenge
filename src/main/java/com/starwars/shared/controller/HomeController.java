@@ -98,22 +98,99 @@ public class HomeController {
         html.append("            margin-bottom: 1rem;");
         html.append("        }");
         html.append("        ");
-        html.append("        .endpoint {");
-        html.append("            background: rgba(255, 215, 0, 0.1);");
-        html.append("            border: 1px solid #ffd700;");
-        html.append("            border-radius: 8px;");
-        html.append("            padding: 0.5rem 1rem;");
-        html.append("            font-family: 'Courier New', monospace;");
-        html.append("            color: #ffd700;");
-        html.append("            margin: 0.5rem 0;");
+        html.append("        .btn {");
         html.append("            display: inline-block;");
+        html.append("            padding: 0.8rem 1.5rem;");
+        html.append("            background: linear-gradient(45deg, #ffd700, #ffed4e);");
+        html.append("            color: #0f0f23;");
+        html.append("            text-decoration: none;");
+        html.append("            border-radius: 25px;");
+        html.append("            font-weight: bold;");
+        html.append("            transition: all 0.3s ease;");
+        html.append("            border: none;");
+        html.append("            cursor: pointer;");
+        html.append("            font-size: 1rem;");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .btn:hover {");
+        html.append("            transform: scale(1.05);");
+        html.append("            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .btn-secondary {");
+        html.append("            background: linear-gradient(45deg, #4a90e2, #357abd);");
+        html.append("            color: white;");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .endpoints {");
+        html.append("            background: rgba(255, 255, 255, 0.05);");
+        html.append("            border-radius: 15px;");
+        html.append("            padding: 2rem;");
+        html.append("            margin-top: 2rem;");
+        html.append("            border: 1px solid rgba(255, 215, 0, 0.2);");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .endpoints h3 {");
+        html.append("            color: #ffd700;");
+        html.append("            margin-bottom: 1rem;");
+        html.append("            text-align: center;");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .endpoint-list {");
+        html.append("            display: grid;");
+        html.append("            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));");
+        html.append("            gap: 1rem;");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .endpoint-item {");
+        html.append("            background: rgba(255, 255, 255, 0.1);");
+        html.append("            padding: 1rem;");
+        html.append("            border-radius: 8px;");
+        html.append("            border-left: 4px solid #ffd700;");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .endpoint-item strong {");
+        html.append("            color: #ffd700;");
+        html.append("            display: block;");
+        html.append("            margin-bottom: 0.5rem;");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .endpoint-item code {");
+        html.append("            background: rgba(0, 0, 0, 0.3);");
+        html.append("            padding: 0.2rem 0.5rem;");
+        html.append("            border-radius: 4px;");
+        html.append("            font-family: 'Courier New', monospace;");
+        html.append("            color: #4a90e2;");
         html.append("        }");
         html.append("        ");
         html.append("        .footer {");
         html.append("            text-align: center;");
+        html.append("            margin-top: 3rem;");
         html.append("            padding: 2rem 0;");
         html.append("            border-top: 1px solid rgba(255, 215, 0, 0.3);");
         html.append("            color: #b8b8b8;");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .footer-buttons {");
+        html.append("            margin: 1rem 0;");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .footer-btn {");
+        html.append("            display: inline-block;");
+        html.append("            padding: 0.6rem 1.2rem;");
+        html.append("            margin: 0 0.5rem;");
+        html.append("            background: rgba(255, 215, 0, 0.2);");
+        html.append("            color: #ffd700;");
+        html.append("            text-decoration: none;");
+        html.append("            border-radius: 20px;");
+        html.append("            border: 1px solid rgba(255, 215, 0, 0.3);");
+        html.append("            transition: all 0.3s ease;");
+        html.append("            font-size: 0.9rem;");
+        html.append("        }");
+        html.append("        ");
+        html.append("        .footer-btn:hover {");
+        html.append("            background: rgba(255, 215, 0, 0.3);");
+        html.append("            transform: translateY(-2px);");
         html.append("        }");
         html.append("        ");
         html.append("        .footer a {");
@@ -124,67 +201,91 @@ public class HomeController {
         html.append("        .footer a:hover {");
         html.append("            text-decoration: underline;");
         html.append("        }");
+        html.append("        ");
+        html.append("        @media (max-width: 768px) {");
+        html.append("            .container {");
+        html.append("                padding: 1rem;");
+        html.append("            }");
+        html.append("            ");
+        html.append("            .header h1 {");
+        html.append("                font-size: 2rem;");
+        html.append("            }");
+        html.append("            ");
+        html.append("            .content {");
+        html.append("                grid-template-columns: 1fr;");
+        html.append("            }");
+        html.append("        }");
         html.append("    </style>");
         html.append("</head>");
         html.append("<body>");
         html.append("    <div class=\"container\">");
         html.append("        <div class=\"header\">");
         html.append("            <h1>🌟 Star Wars API</h1>");
-        html.append("            <p>Challenge Técnico Conexa - API REST que integra con SWAPI para gestionar personajes, películas, naves espaciales y vehículos del universo Star Wars.</p>");
+        html.append("            <p>API REST que integra con la API oficial de Star Wars (swapi.tech) y proporciona un sistema de autenticación con JWT</p>");
         html.append("        </div>");
         html.append("        ");
         html.append("        <div class=\"content\">");
         html.append("            <div class=\"card\">");
-        html.append("                <h3>🔐 Autenticación</h3>");
-        html.append("                <p>Accede a todos los endpoints protegidos con JWT:</p>");
-        html.append("                <div class=\"endpoint\">POST /auth/login</div>");
-        html.append("                <div class=\"endpoint\">POST /auth/register</div>");
-        html.append("                <div class=\"endpoint\">GET /auth/check-username/{username}</div>");
+        html.append("                <h3>📚 Documentación Interactiva</h3>");
+        html.append("                <p>Accede a Swagger UI para probar todos los endpoints de la API de manera interactiva.</p>");
+        html.append("                <a href=\"/swagger-ui/index.html\" class=\"btn\">Abrir Swagger UI</a>");
         html.append("            </div>");
         html.append("            ");
         html.append("            <div class=\"card\">");
-        html.append("                <h3>🎬 Películas</h3>");
-        html.append("                <p>Gestiona las películas de Star Wars:</p>");
-        html.append("                <div class=\"endpoint\">GET /films?title={title}&page={page}&limit={limit}</div>");
-        html.append("                <div class=\"endpoint\">GET /films/{id}</div>");
+        html.append("                <h3>📖 Documentación Técnica</h3>");
+        html.append("                <p>Accede al repositorio de GitHub para ver el código fuente, README completo y documentación técnica detallada.</p>");
+        html.append("                <a href=\"https://github.com/maxif96/conexa-starwars-challenge\" target=\"_blank\" class=\"btn btn-secondary\">Ver en GitHub</a>");
         html.append("            </div>");
-        html.append("            ");
-        html.append("            <div class=\"card\">");
-        html.append("                <h3>👥 Personajes</h3>");
-        html.append("                <p>Explora los personajes del universo Star Wars:</p>");
-        html.append("                <div class=\"endpoint\">GET /people?name={name}&page={page}&limit={limit}</div>");
-        html.append("                <div class=\"endpoint\">GET /people/{id}</div>");
-        html.append("            </div>");
-        html.append("            ");
-        html.append("            <div class=\"card\">");
-        html.append("                <h3>🚀 Naves Espaciales</h3>");
-        html.append("                <p>Descubre las naves espaciales de Star Wars:</p>");
-        html.append("                <div class=\"endpoint\">GET /starships?name={name}&page={page}&limit={limit}</div>");
-        html.append("                <div class=\"endpoint\">GET /starships/{id}</div>");
-        html.append("            </div>");
-        html.append("            ");
-        html.append("            <div class=\"card\">");
-        html.append("                <h3>🚗 Vehículos</h3>");
-        html.append("                <p>Explora los vehículos terrestres de Star Wars:</p>");
-        html.append("                <div class=\"endpoint\">GET /vehicles?name={name}&page={page}&limit={limit}</div>");
-        html.append("                <div class=\"endpoint\">GET /vehicles/{id}</div>");
-        html.append("            </div>");
-        html.append("            ");
-        html.append("            <div class=\"card\">");
-        html.append("                <h3>📚 Documentación</h3>");
-        html.append("                <p>Accede a la documentación completa de la API:</p>");
-        html.append("                <div class=\"endpoint\">GET /swagger-ui/index.html</div>");
-        html.append("                <div class=\"endpoint\">GET /api-docs</div>");
+        html.append("        </div>");
+        html.append("        ");
+        html.append("        <div class=\"endpoints\">");
+        html.append("            <h3>🚀 Endpoints Principales</h3>");
+        html.append("            <div class=\"endpoint-list\">");
+        html.append("                                <div class=\"endpoint-item\">");
+        html.append("                    <strong>Autenticación</strong>");
+        html.append("                    <code>POST /auth/login</code><br>");
+        html.append("                    <code>POST /auth/register</code><br>");
+        html.append("                    <code>GET /auth/check-username/{username}</code>");
+        html.append("                </div>");
+        html.append("                <div class=\"endpoint-item\">");
+        html.append("                    <strong>Personajes</strong>");
+        html.append("                    <code>GET /people</code><br>");
+        html.append("                    <code>GET /people/{id}</code><br>");
+        html.append("                    <code>GET /people?name={name}&page={page}&limit={limit}</code>");
+        html.append("                </div>");
+        html.append("                <div class=\"endpoint-item\">");
+        html.append("                    <strong>Películas</strong>");
+        html.append("                    <code>GET /films</code><br>");
+        html.append("                    <code>GET /films/{id}</code><br>");
+        html.append("                    <code>GET /films?name={name}&page={page}&limit={limit}</code>");
+        html.append("                </div>");
+        html.append("                <div class=\"endpoint-item\">");
+        html.append("                    <strong>Naves Espaciales</strong>");
+        html.append("                    <code>GET /starships</code><br>");
+        html.append("                    <code>GET /starships/{id}</code><br>");
+        html.append("                    <code>GET /starships?name={name}&page={page}&limit={limit}</code>");
+        html.append("                </div>");
+        html.append("                <div class=\"endpoint-item\">");
+        html.append("                    <strong>Vehículos</strong>");
+        html.append("                    <code>GET /vehicles</code><br>");
+        html.append("                    <code>GET /vehicles/{id}</code><br>");
+        html.append("                    <code>GET /vehicles?name={name}&page={page}&limit={limit}</code>");
+        html.append("                </div>");
         html.append("            </div>");
         html.append("        </div>");
         html.append("        ");
         html.append("        <div class=\"footer\">");
-        html.append("            <p>Desarrollado para el <a href=\"https://github.com/maxif96/conexa-starwars-challenge\" target=\"_blank\">Challenge Técnico Conexa</a></p>");
-        html.append("            <p>Integración con <a href=\"https://www.swapi.tech\" target=\"_blank\">SWAPI (Star Wars API)</a></p>");
+        html.append("            <p>Desarrollado por <a href=\"https://github.com/maxif96\" target=\"_blank\">Maximiliano Ariel Falcone</a> para el Challenge Técnico Conexa</p>");
+        html.append("            <div class=\"footer-buttons\">");
+        html.append("                <a href=\"https://github.com/maxif96/conexa-starwars-challenge\" target=\"_blank\" class=\"footer-btn\">📖 Ver en GitHub</a>");
+        html.append("                <a href=\"https://github.com/maxif96/conexa-starwars-challenge/blob/main/README.md\" target=\"_blank\" class=\"footer-btn\">📚 README Completo</a>");
+        html.append("                <a href=\"/api\" class=\"footer-btn\">🔧 API Info</a>");
+        html.append("            </div>");
         html.append("        </div>");
         html.append("    </div>");
         html.append("</body>");
         html.append("</html>");
+
         return html.toString();
     }
 
@@ -192,29 +293,28 @@ public class HomeController {
     public ResponseEntity<Map<String, Object>> getApiInfo() {
         Map<String, Object> apiInfo = new HashMap<>();
         apiInfo.put("name", "Star Wars API");
-        apiInfo.put("description", "API REST que integra con SWAPI para gestionar datos de Star Wars");
+        apiInfo.put("description", "API REST que integra con la API oficial de Star Wars (swapi.tech) y proporciona un sistema de autenticación con JWT");
         apiInfo.put("version", "1.0.0");
-        apiInfo.put("author", "Challenge Técnico Conexa");
-        apiInfo.put("endpoints", new String[]{
-            "GET / - Página de inicio",
-            "GET /api - Información de la API",
-            "POST /auth/login - Autenticación",
-            "POST /auth/register - Registro",
-            "GET /auth/check-username/{username} - Verificar disponibilidad de username",
-            "GET /films - Listar/buscar películas",
-            "GET /films/{id} - Obtener película por ID",
-            "GET /people - Listar/buscar personajes",
-            "GET /people/{id} - Obtener personaje por ID",
-            "GET /starships - Listar/buscar naves espaciales",
-            "GET /starships/{id} - Obtener nave espacial por ID",
-            "GET /vehicles - Listar/buscar vehículos",
-            "GET /vehicles/{id} - Obtener vehículo por ID",
-            "GET /swagger-ui/index.html - Documentación Swagger",
-            "GET /api-docs - Especificación OpenAPI"
-        });
-        apiInfo.put("documentation", "/swagger-ui/index.html");
-        apiInfo.put("swapi_integration", "https://www.swapi.tech");
+        apiInfo.put("author", "Maxif96");
+        apiInfo.put("github", "https://github.com/maxif96");
+
+        Map<String, String> endpoints = new HashMap<>();
+        endpoints.put("swagger_ui", "/swagger-ui/index.html");
+        endpoints.put("api_docs", "/api-docs");
+        endpoints.put("authentication", "/auth");
+        endpoints.put("people", "/people");
+        endpoints.put("films", "/films");
+        endpoints.put("starships", "/starships");
+        endpoints.put("vehicles", "/vehicles");
+
+        apiInfo.put("endpoints", endpoints);
+
+        Map<String, String> documentation = new HashMap<>();
+        documentation.put("swagger_ui", "Interfaz interactiva para probar la API");
+        documentation.put("readme", "https://github.com/maxif96/starwars-api/blob/main/README.md");
+
+        apiInfo.put("documentation", documentation);
+
         return ResponseEntity.ok(apiInfo);
     }
 }
-
