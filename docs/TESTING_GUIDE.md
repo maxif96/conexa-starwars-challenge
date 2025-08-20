@@ -63,7 +63,7 @@ src/test/java/com/starwars/
 ### Tecnologías Utilizadas
 
 #### Tests Unitarios
-- **JUnit 4**: Framework de testing
+- **JUnit 5 (Jupiter)**: Framework de testing
 - **Mockito**: Mocking de dependencias
 - **ReflectionTestUtils**: Inyección de campos privados
 
@@ -81,7 +81,7 @@ src/test/java/com/starwars/
 
 #### 1. Aislamiento Completo
 ```java
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PersonServiceUnitTest {
     @Mock private PersonMapper personMapper;
     @InjectMocks private PersonService personService;
@@ -101,16 +101,16 @@ private RestTemplate restTemplate;
 // Todas las dependencias externas están mockeadas
 ```
 
-#### **3. Inyección de Configuración**
+#### 3. Inyección de Configuración
 ```java
-@Before
+@BeforeEach
 public void setUp() {
     // Inyectar configuración que normalmente viene de @Value
     ReflectionTestUtils.setField(personService, "baseUrl", "https://swapi.tech/api");
 }
 ```
 
-#### **4. Spy para Métodos Heredados**
+#### 4. Spy para Métodos Heredados
 ```java
 @Test
 public void getPersonById_ValidId_ShouldReturnPerson() {
@@ -129,7 +129,7 @@ public void getPersonById_ValidId_ShouldReturnPerson() {
 
 ### Patrón de Testing
 
-#### **Arrange-Act-Assert (AAA)**
+#### Arrange-Act-Assert (AAA)
 ```java
 @Test
 public void listOrSearchPeople_WithNameParameter_ShouldReturnSearchResults() {
@@ -163,9 +163,29 @@ public void listOrSearchPeople_WithNameParameter_ShouldReturnSearchResults() {
 }
 ```
 
+### Manejo de Excepciones en JUnit 5
+
+#### Uso de assertThrows
+```java
+@Test
+public void getPersonById_InvalidId_ShouldThrowResourceNotFoundException() {
+    // Arrange
+    String personId = "999";
+    ApiEntityResponse<ApiDetailResult<PersonApiDto>> apiResponse = createApiEntityResponse(null);
+
+    PersonService spyService = spy(personService);
+    doReturn(apiResponse).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
+
+    // Act & Assert - JUnit 5 usa assertThrows en lugar de expected
+    assertThrows(ResourceNotFoundException.class, () -> {
+        spyService.getPersonById(personId);
+    });
+}
+```
+
 ### Métodos de Ayuda
 
-#### **Creación de Objetos de Test**
+#### Creación de Objetos de Test
 ```java
 // Métodos auxiliares para crear objetos de test
 private PersonApiDto createPersonApiDto(String uid, String name) {
@@ -196,23 +216,21 @@ private ApiEntityResponse<List<ApiDetailResult<PersonApiDto>>> createApiEntityRe
 
 ### Características Principales
 
-#### **1. Contexto Spring Completo**
+#### 1. Contexto Spring Completo
 ```java
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = StarWarsApplication.class, 
                 webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebMvc
-@TestPropertySource(properties = {
-    "swapi.api.base-url=http://localhost:9999/api"
-})
+@ActiveProfiles("test")
 public class PeopleControllerIntegrationTest {
     // Contexto Spring completo disponible
 }
 ```
 
-#### **2. Simulación de API Externa con WireMock**
+#### 2. Simulación de API Externa con WireMock
 ```java
-@Before
+@BeforeEach
 public void setUp() {
     mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     
@@ -222,13 +240,13 @@ public void setUp() {
     WireMock.configureFor("localhost", 9999);
 }
 
-@After
+@AfterEach
 public void tearDown() {
     wireMockServer.stop();
 }
 ```
 
-#### **3. MockMvc para Testing de Controladores**
+#### 3. MockMvc para Testing de Controladores
 ```java
 @Test
 public void listPeople_WithoutNameFilter_ShouldReturnPaginatedResults() throws Exception {
@@ -253,9 +271,53 @@ public void listPeople_WithoutNameFilter_ShouldReturnPaginatedResults() throws E
 }
 ```
 
+### Configuración de Perfil de Test
+
+#### Archivo application-test.properties
+```properties
+# Configuración de base de datos para tests
+spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=create-drop
+
+# Configuración de JWT para tests
+JWT_SECRET=testSecretKeyForTestingPurposesOnly12345678901234567890
+JWT_EXPIRATION=86400000
+
+# Configuración de la API externa para tests
+swapi.api.base-url=http://localhost:9999/api
+
+# Configuración de logging para tests
+logging.level.com.starwars=DEBUG
+logging.level.org.springframework.security=DEBUG
+
+# Configuración de H2 Console para tests
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+# Configuración de seguridad para tests
+spring.security.user.name=testuser
+spring.security.user.password=testpass
+```
+
+#### Activación del Perfil
+```java
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = StarWarsApplication.class, 
+                webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWebMvc
+@ActiveProfiles("test")  // Activa el perfil de test
+public class PeopleControllerIntegrationTest {
+    // ...
+}
+```
+
 ### Configuración de WireMock
 
-#### **Stubbing de Endpoints**
+#### Stubbing de Endpoints
 ```java
 // Stub para listado paginado
 stubFor(WireMock.get(urlPathEqualTo("/api/people"))
@@ -283,7 +345,7 @@ stubFor(WireMock.get(urlPathEqualTo("/api/people/1"))
                 .withBody(mockEntityResponse)));
 ```
 
-#### **Respuestas Mock Realistas**
+#### Respuestas Mock Realistas
 ```java
 private String createMockPeopleResponse() {
     return "{\n" +
@@ -315,7 +377,7 @@ private String createMockPeopleResponse() {
 
 ### Testing de Casos de Error
 
-#### **Errores de API Externa**
+#### Errores de API Externa
 ```java
 @Test
 public void getPersonById_InvalidId_ShouldReturnNotFound() throws Exception {
@@ -334,7 +396,7 @@ public void getPersonById_InvalidId_ShouldReturnNotFound() throws Exception {
 }
 ```
 
-#### **Validación de Parámetros**
+#### Validación de Parámetros
 ```java
 @Test
 public void listPeople_WithInvalidPagination_ShouldReturnBadRequest() throws Exception {
@@ -363,19 +425,21 @@ public void listPeople_WithLargeLimit_ShouldReturnBadRequest() throws Exception 
 
 ### Comandos Maven
 
-#### **Ejecutar Todos los Tests**
+#### Ejecutar Todos los Tests
 ```bash
 # Ejecutar todos los tests
 mvn test
 
 # Ejecutar tests con información detallada
 mvn test -X
-```
 
+# Ejecutar tests con cobertura JaCoCo
+mvn clean test jacoco:report
+```
 
 ### Configuración de IDE
 
-#### **IntelliJ IDEA**
+#### IntelliJ IDEA
 1. **Configurar Run Configuration**:
    - Type: JUnit
    - Test kind: Class
@@ -383,7 +447,7 @@ mvn test -X
    - Working directory: `$MODULE_DIR$`
 
 2. **Configurar Test Runner**:
-   - Default test runner: JUnit 4
+   - Default test runner: JUnit 5 (Jupiter)
    - Generate test runner: IntelliJ IDEA
 
 3. **Ejecutar Tests**:
@@ -391,26 +455,24 @@ mvn test -X
    - Click derecho en método → Run 'testMethodName'
    - Ctrl+Shift+F10 para ejecutar test actual
 
-#### **Eclipse**
-1. **Configurar JUnit 4**:
-   - Help → Eclipse Marketplace → Search "JUnit 4"
-   - Install JUnit 4
+#### Eclipse
+1. **Configurar JUnit 5**:
+   - Help → Eclipse Marketplace → Search "JUnit 5"
+   - Install JUnit 5
 
 2. **Ejecutar Tests**:
    - Click derecho en clase → Run As → JUnit Test
    - Click derecho en método → Run As → JUnit Test
 
-
-
 ---
 
-## 📝 Ejemplos Prácticos
+## Ejemplos Prácticos
 
 ### Test Unitario Completo
 
-#### **PersonServiceUnitTest.java**
+#### PersonServiceUnitTest.java
 ```java
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PersonServiceUnitTest {
 
     @Mock
@@ -419,7 +481,7 @@ public class PersonServiceUnitTest {
     @InjectMocks
     private PersonService personService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         ReflectionTestUtils.setField(personService, "baseUrl", "https://swapi.tech/api");
     }
@@ -450,7 +512,7 @@ public class PersonServiceUnitTest {
         verify(personMapper).toResponseDtoFromDetail(any(ApiResult.class));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getPersonById_InvalidId_ShouldThrowResourceNotFoundException() {
         // Arrange
         String personId = "999";
@@ -459,8 +521,10 @@ public class PersonServiceUnitTest {
         PersonService spyService = spy(personService);
         doReturn(apiResponse).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act & Assert
-        spyService.getPersonById(personId);
+        // Act & Assert - JUnit 5 usa assertThrows
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getPersonById(personId);
+        });
     }
 
     // Métodos auxiliares...
@@ -469,15 +533,13 @@ public class PersonServiceUnitTest {
 
 ### Test de Integración Completo
 
-#### **PeopleControllerIntegrationTest.java**
+#### PeopleControllerIntegrationTest.java
 ```java
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = StarWarsApplication.class, 
                 webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebMvc
-@TestPropertySource(properties = {
-    "swapi.api.base-url=http://localhost:9999/api"
-})
+@ActiveProfiles("test")
 public class PeopleControllerIntegrationTest {
 
     @Autowired
@@ -487,7 +549,7 @@ public class PeopleControllerIntegrationTest {
     private WireMockServer wireMockServer;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
@@ -496,7 +558,7 @@ public class PeopleControllerIntegrationTest {
         WireMock.configureFor("localhost", 9999);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         wireMockServer.stop();
     }
@@ -555,7 +617,7 @@ public class PeopleControllerIntegrationTest {
 
 ## Mejores Prácticas
 
-### 1. **Nomenclatura de Tests**
+### 1. Nomenclatura de Tests
 ```java
 // Formato: methodName_scenario_expectedResult
 @Test
@@ -568,7 +630,7 @@ public void listPeople_WithNameFilter_ShouldReturnFilteredResults()
 public void listPeople_WithEmptyName_ShouldReturnAllPeople()
 ```
 
-### 2. **Organización de Tests**
+### 2. Organización de Tests
 ```java
 @Test
 public void methodName_scenario_expectedResult() {
@@ -583,7 +645,7 @@ public void methodName_scenario_expectedResult() {
 }
 ```
 
-### 3. **Mocks y Stubs**
+### 3. Mocks y Stubs
 ```java
 // Usar when() para stubs que retornan valores
 when(personMapper.toResponseDtoFromDetail(any())).thenReturn(responseDto);
@@ -596,7 +658,7 @@ verify(personMapper).toResponseDtoFromDetail(any());
 verify(personMapper, times(2)).toResponseDtoFromDetail(any());
 ```
 
-### 4. **Validaciones de Assertions**
+### 4. Validaciones de Assertions
 ```java
 // Validaciones básicas
 assertNotNull(result);
@@ -609,64 +671,30 @@ assertEquals(expectedSize, list.size());
 assertTrue(list.contains(expectedItem));
 assertThat(list, hasSize(expectedSize));
 
-// Validaciones de excepciones
-@Test(expected = ResourceNotFoundException.class)
+// Validaciones de excepciones en JUnit 5
+@Test
 public void shouldThrowException() {
-    // código que debe lanzar excepción
+    assertThrows(ResourceNotFoundException.class, () -> {
+        service.methodThatShouldThrowException();
+    });
 }
 
-// O usando try-catch
-try {
-    service.methodThatShouldThrowException();
-    fail("Expected exception was not thrown");
-} catch (ExpectedException e) {
-    assertEquals("Expected message", e.getMessage());
+// O usando try-catch para validar mensajes específicos
+@Test
+public void shouldThrowExceptionWithSpecificMessage() {
+    Exception exception = assertThrows(ExpectedException.class, () -> {
+        service.methodThatShouldThrowException();
+    });
+    assertEquals("Expected message", exception.getMessage());
 }
 ```
 
 ---
 
-## Troubleshooting
-
-### Problemas Comunes
-
-#### **1. Tests Unitarios Fallan por Dependencias**
-```java
-// Problema: NullPointerException en baseUrl
-// Solución: Usar ReflectionTestUtils
-@Before
-public void setUp() {
-    ReflectionTestUtils.setField(personService, "baseUrl", "https://swapi.tech/api");
-}
-```
-
-#### **2. Tests de Integración Fallan por Puerto Ocupado**
-```java
-// Problema: Puerto 9999 ya está en uso
-// Solución: Usar puerto dinámico
-wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(0));
-int port = wireMockServer.port();
-WireMock.configureFor("localhost", port);
-```
-
-#### **3. Mocks No Funcionan en Tests de Integración**
-```java
-// Problema: Mocks no se aplican en contexto Spring
-// Solución: Usar @MockBean en lugar de @Mock
-@MockBean
-private PersonMapper personMapper;
-```
-
-#### **4. Tests Fallan por Orden de Ejecución**
-```java
-// Problema: Tests dependen del orden de ejecución
-// Solución: Usar @DirtiesContext o resetear estado
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-```
 
 ### Debugging de Tests
 
-#### **1. Logging Detallado**
+#### 1. Logging Detallado
 ```properties
 # application-test.properties
 logging.level.com.starwars=DEBUG
@@ -674,14 +702,14 @@ logging.level.org.springframework.web=DEBUG
 logging.level.org.springframework.test=DEBUG
 ```
 
-#### **2. Usar print() en MockMvc**
+#### 2. Usar print() en MockMvc
 ```java
 mockMvc.perform(get("/people"))
         .andDo(print())  // Imprime request y response
         .andExpect(status().isOk());
 ```
 
-#### **3. Debugging con IDE**
+#### 3. Debugging con IDE
 ```java
 // Agregar breakpoints en tests
 @Test
@@ -692,4 +720,157 @@ public void debugTest() {
 ```
 
 ---
+
+## Migración de JUnit 4 a JUnit 5
+
+### Cambios Principales
+
+#### 1. Anotaciones
+```java
+// JUnit 4
+@RunWith(MockitoJUnitRunner.class)
+@Before
+@After
+@Test(expected = Exception.class)
+
+// JUnit 5
+@ExtendWith(MockitoExtension.class)
+@BeforeEach
+@AfterEach
+@Test + assertThrows()
+```
+
+#### 2. Imports
+```java
+// JUnit 4
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
+
+// JUnit 5
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+```
+
+#### 3. Manejo de Excepciones
+```java
+// JUnit 4
+@Test(expected = ResourceNotFoundException.class)
+public void shouldThrowException() {
+    service.methodThatShouldThrowException();
+}
+
+// JUnit 5
+@Test
+public void shouldThrowException() {
+    assertThrows(ResourceNotFoundException.class, () -> {
+        service.methodThatShouldThrowException();
+    });
+}
+```
+
+#### 4. Assertions
+```java
+// JUnit 4
+import org.junit.Assert.*;
+
+// JUnit 5
+import org.junit.jupiter.api.Assertions.*;
+```
+
+### Configuración de Maven
+
+#### Dependencias Actualizadas
+```xml
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-junit-jupiter</artifactId>
+    <scope>test</scope>
+</dependency>
+```
+
+#### Plugin de Surefire
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>3.0.0</version>
+    <configuration>
+        <includes>
+            <include>**/*Test.java</include>
+            <include>**/*Tests.java</include>
+        </includes>
+        <excludes>
+            <exclude>**/Abstract*.java</exclude>
+        </excludes>
+    </configuration>
+</plugin>
+```
+
+---
+
+## Cobertura de Tests con JaCoCo
+
+### Configuración del Plugin
+```xml
+<plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.8.10</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>prepare-agent</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+### Generación de Reportes
+```bash
+# Ejecutar tests y generar reporte de cobertura
+mvn clean test jacoco:report
+
+# Ver reporte en target/site/jacoco/index.html
+```
+
+### Configuración de Umbrales
+```xml
+<execution>
+    <id>check</id>
+    <goals>
+        <goal>check</goal>
+    </goals>
+    <configuration>
+        <rules>
+            <rule>
+                <element>BUNDLE</element>
+                <limits>
+                    <limit>
+                        <counter>LINE</counter>
+                        <value>COVEREDRATIO</value>
+                        <minimum>0.80</minimum>
+                    </limit>
+                </limits>
+            </rule>
+        </rules>
+    </configuration>
+</execution>
+```
 

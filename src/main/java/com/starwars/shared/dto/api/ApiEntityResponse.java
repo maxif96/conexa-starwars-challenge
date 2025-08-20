@@ -15,3 +15,4 @@ public class ApiEntityResponse<T> {
     @JsonProperty("result")
     private T result;
 }
+

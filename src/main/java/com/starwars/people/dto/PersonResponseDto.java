@@ -19,3 +19,4 @@ public class PersonResponseDto {
     private String gender;
     private String homeworld;
 }
+

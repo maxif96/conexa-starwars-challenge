@@ -7,12 +7,12 @@ import com.starwars.starships.dto.StarshipResponseDto;
 import com.starwars.shared.exception.ResourceNotFoundException;
 import com.starwars.starships.mapper.StarshipMapper;
 import com.starwars.starships.service.StarshipService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -20,11 +20,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class StarshipServiceUnitTest {
 
     @Mock
@@ -33,7 +33,7 @@ public class StarshipServiceUnitTest {
     @InjectMocks
     private StarshipService starshipService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Configuramos el baseUrl que se inyecta por @Value
         ReflectionTestUtils.setField(starshipService, "baseUrl", "https://swapi.tech/api");
@@ -221,7 +221,7 @@ public class StarshipServiceUnitTest {
         verify(starshipMapper).toResponseDtoFromDetail(any(ApiResult.class));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getStarshipById_NullApiResponse_ShouldThrowException() {
         // Arrange
         String starshipId = "999";
@@ -229,13 +229,13 @@ public class StarshipServiceUnitTest {
         StarshipService spyService = spy(starshipService);
         doReturn(null).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getStarshipById(starshipId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getStarshipById(starshipId);
+        });
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getStarshipById_NullResult_ShouldThrowException() {
         // Arrange
         String starshipId = "999";
@@ -244,13 +244,13 @@ public class StarshipServiceUnitTest {
         StarshipService spyService = spy(starshipService);
         doReturn(apiResponse).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getStarshipById(starshipId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getStarshipById(starshipId);
+        });
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getStarshipById_NullProperties_ShouldThrowException() {
         // Arrange
         String starshipId = "999";
@@ -263,13 +263,13 @@ public class StarshipServiceUnitTest {
         StarshipService spyService = spy(starshipService);
         doReturn(apiResponse).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getStarshipById(starshipId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getStarshipById(starshipId);
+        });
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getStarshipById_ApiThrowsException_ShouldThrowResourceNotFoundException() {
         // Arrange
         String starshipId = "1";
@@ -277,10 +277,10 @@ public class StarshipServiceUnitTest {
         StarshipService spyService = spy(starshipService);
         doThrow(new RuntimeException("API Error")).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getStarshipById(starshipId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getStarshipById(starshipId);
+        });
     }
 
     // Métodos auxiliares para crear objetos de prueba

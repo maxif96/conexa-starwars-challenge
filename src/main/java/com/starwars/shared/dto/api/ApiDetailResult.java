@@ -17,3 +17,4 @@ public class ApiDetailResult<T> {
     @JsonProperty("uid")
     private String uid;
 }
+

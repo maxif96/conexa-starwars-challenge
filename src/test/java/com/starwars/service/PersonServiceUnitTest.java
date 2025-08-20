@@ -7,12 +7,12 @@ import com.starwars.people.dto.PersonResponseDto;
 import com.starwars.shared.exception.ResourceNotFoundException;
 import com.starwars.people.mapper.PersonMapper;
 import com.starwars.people.service.PersonService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -20,11 +20,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PersonServiceUnitTest {
 
     @Mock
@@ -33,7 +33,7 @@ public class PersonServiceUnitTest {
     @InjectMocks
     private PersonService personService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Configuramos el baseUrl que se inyecta por @Value
         ReflectionTestUtils.setField(personService, "baseUrl", "https://swapi.tech/api");
@@ -212,7 +212,7 @@ public class PersonServiceUnitTest {
         verify(personMapper).toResponseDtoFromDetail(any(ApiResult.class));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getPersonById_NullApiResponse_ShouldThrowException() {
         // Arrange
         String personId = "999";
@@ -220,13 +220,13 @@ public class PersonServiceUnitTest {
         PersonService spyService = spy(personService);
         doReturn(null).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getPersonById(personId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getPersonById(personId);
+        });
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getPersonById_NullResult_ShouldThrowException() {
         // Arrange
         String personId = "999";
@@ -235,13 +235,13 @@ public class PersonServiceUnitTest {
         PersonService spyService = spy(personService);
         doReturn(apiResponse).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getPersonById(personId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getPersonById(personId);
+        });
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getPersonById_NullProperties_ShouldThrowException() {
         // Arrange
         String personId = "999";
@@ -254,13 +254,13 @@ public class PersonServiceUnitTest {
         PersonService spyService = spy(personService);
         doReturn(apiResponse).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getPersonById(personId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getPersonById(personId);
+        });
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getPersonById_ApiThrowsException_ShouldThrowResourceNotFoundException() {
         // Arrange
         String personId = "1";
@@ -268,10 +268,10 @@ public class PersonServiceUnitTest {
         PersonService spyService = spy(personService);
         doThrow(new RuntimeException("API Error")).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getPersonById(personId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getPersonById(personId);
+        });
     }
 
     // Métodos auxiliares para crear objetos de prueba

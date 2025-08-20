@@ -18,3 +18,4 @@ public class StarshipResponseDto {
     private String passengers;
     private String starshipClass;
 }
+

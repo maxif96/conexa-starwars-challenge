@@ -2,7 +2,7 @@
 
 ## Índice
 1. [Arquitectura General](#arquitectura-general)
-2. [Arquitectura Monolítica: Justificación y Beneficios](#-arquitectura-monolítica-justificación-y-beneficios)
+2. [Arquitectura Monolítica: Justificación y Beneficios](#arquitectura-monolítica-justificación-y-beneficios)
 3. [Patrones de Diseño](#patrones-de-diseño)
 4. [Estructura de DTOs](#estructura-de-dtos)
 5. [Manejo de SWAPI](#manejo-de-swapi)
@@ -40,52 +40,52 @@
 
 ---
 
-## 🏗️ **Arquitectura Monolítica: Justificación y Beneficios**
+## Arquitectura Monolítica: Justificación y Beneficios
 
-### **¿Por qué Arquitectura Monolítica?**
+### ¿Por qué Arquitectura Monolítica?
 
-#### **1. Simplicidad y Desarrollo Rápido**
+#### 1. Simplicidad y Desarrollo Rápido
 - **Desarrollo inicial más rápido**: No hay necesidad de configurar microservicios, service discovery, o gateways
 - **Debugging simplificado**: Todo el código está en un solo lugar, facilitando la identificación y resolución de problemas
 - **Menor complejidad operacional**: Un solo servicio para desplegar, monitorear y mantener
 
-#### **2. Tamaño y Escala del Proyecto**
+#### 2. Tamaño y Escala del Proyecto
 - **Proyecto de tamaño mediano**: Para el alcance actual (4 entidades principales + autenticación), la complejidad de microservicios sería excesiva
 
-#### **3. Integración con APIs Externas**
+#### 3. Integración con APIs Externas
 - **SWAPI como fuente única**: La integración con [SWAPI](https://www.swapi.tech) es directa y no requiere coordinación entre múltiples servicios
 - **Transformación de datos centralizada**: Los mappers y DTOs están en un solo lugar, facilitando la consistencia
 
-#### **4. Base de Datos Simple**
+#### 4. Base de Datos Simple
 - **H2 en memoria**: Para usuarios y autenticación, una base de datos simple es suficiente
 - **Sin necesidad de transacciones distribuidas**: Todas las operaciones están en el mismo contexto transaccional
 
-### **Ventajas de la Arquitectura Monolítica**
+### Ventajas de la Arquitectura Monolítica
 
-#### **✅ Beneficios Técnicos**
+#### Beneficios Técnicos
 - **Despliegue simple**: Un solo JAR/WAR file
 - **Testing más fácil**: Tests de integración sin mocks de servicios externos
 
-#### **✅ Beneficios Operacionales**
+#### Beneficios Operacionales
 - **Monitoreo centralizado**: Logs y métricas en un solo lugar
 - **Escalado horizontal simple**: Múltiples instancias del mismo servicio
 - **Mantenimiento**: Actualizaciones y parches en un solo componente
 
-#### **✅ Beneficios de Desarrollo**
+#### Beneficios de Desarrollo
 - **Código compartido**: Utilidades y helpers accesibles desde cualquier parte
 - **Refactoring más fácil**: Cambios que afectan múltiples capas en una sola operación
 - **Dependencias**: Gestión simplificada de librerías y versiones
 
-### **Cuándo Considerar Microservicios**
+### Cuándo Considerar Microservicios
 - En caso de que se prevea una expansión de la aplicación sería conveniente evaluar la migración a microservicios
 
-#### **🔄 Estrategia de Migración Futura:**
+#### Estrategia de Migración Futura:
 Si en el futuro se requiere migrar a microservicios, la arquitectura actual facilita esta transición:
 - **Separación clara de capas**: Controller, Service, Repository ya están bien definidos
 - **DTOs independientes**: Los objetos de transferencia están desacoplados de la implementación
 - **Servicios cohesivos**: Cada servicio tiene responsabilidades bien definidas
 
-### **Arquitectura Actual vs. Alternativas**
+### Arquitectura Actual vs. Alternativas
 
 | Aspecto | Monolítica (Actual) | Microservicios | Serverless |
 |---------|---------------------|----------------|------------|
@@ -96,7 +96,7 @@ Si en el futuro se requiere migrar a microservicios, la arquitectura actual faci
 | **Testing** | Fácil | Complejo | Fácil |
 | **Debugging** | Simple | Complejo | Simple |
 
-### **Conclusión**
+### Conclusión
 Para el **Challenge Técnico Conexa** y el alcance actual del proyecto, la arquitectura monolítica es la elección más apropiada porque:
 1. **Permite desarrollo rápido** y entrega de valor
 2. **Mantiene la simplicidad** operacional
@@ -468,7 +468,7 @@ export JWT_SECRET="tu-clave-super-secreta-de-al-menos-32-caracteres"
 
 ---
 
-## 🚨 Manejo de Excepciones
+## Manejo de Excepciones
 
 ### Estrategia de Manejo
 
@@ -513,7 +513,7 @@ public class GlobalExceptionHandler {
 #### **Tests Unitarios**
 **Ubicación**: `src/test/java/com/starwars/service/`
 **Objetivo**: Probar lógica de negocio en aislamiento
-**Tecnología**: JUnit 4 + Mockito
+**Tecnología**: JUnit 5 (Jupiter) + Mockito
 
 **Características**:
 - Rápidos (sin contexto Spring)
@@ -523,12 +523,12 @@ public class GlobalExceptionHandler {
 
 **Ejemplo**:
 ```java
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PersonServiceUnitTest {
     @Mock private PersonMapper personMapper;
     @InjectMocks private PersonService personService;
     
-    @Before
+    @BeforeEach
     public void setUp() {
         ReflectionTestUtils.setField(personService, "baseUrl", "https://swapi.tech/api");
     }
@@ -545,7 +545,7 @@ public class PersonServiceUnitTest {
 #### **Tests de Integración**
 **Ubicación**: `src/test/java/com/starwars/controller/`
 **Objetivo**: Probar flujo completo de controladores
-**Tecnología**: JUnit 4 + Spring Boot Test + WireMock
+**Tecnología**: JUnit 5 (Jupiter) + Spring Boot Test + WireMock
 
 **Características**:
 - Contexto Spring completo
@@ -555,11 +555,9 @@ public class PersonServiceUnitTest {
 
 **Ejemplo**:
 ```java
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = StarWarsApplication.class)
-@TestPropertySource(properties = {
-    "swapi.api.base-url=http://localhost:9999/api"
-})
+@ActiveProfiles("test")  // Activa perfil de test
 public class PeopleControllerIntegrationTest {
     @Autowired private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
@@ -581,9 +579,38 @@ public class PeopleControllerIntegrationTest {
 3. **Mantenibilidad**: Separación clara de responsabilidades
 4. **Flexibilidad**: Ejecutar solo tests unitarios o de integración
 
+### Configuración de Tests
+
+#### **Perfil de Test**
+```properties
+# src/test/resources/application-test.properties
+# Configuración de base de datos para tests
+spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+spring.datasource.driverClassName=org.h2.Driver
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=create-drop
+
+# Configuración de JWT para tests
+JWT_SECRET=testSecretKeyForTestingPurposesOnly12345678901234567890
+JWT_EXPIRATION=86400000
+
+# Configuración de la API externa para tests
+swapi.api.base-url=http://localhost:9999/api
+```
+
+#### **Activación del Perfil**
+```java
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = StarWarsApplication.class)
+@ActiveProfiles("test")  // Activa el perfil de test
+public class ControllerIntegrationTest {
+    // ...
+}
+```
+
 ---
 
-## ⚙️ Configuraciones
+## Configuraciones
 
 ### Application Properties
 
@@ -631,7 +658,7 @@ server.port=8080
 ```java
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
     // Configuración de autenticación
     // Configuración de autorización
     // Configuración de JWT
@@ -651,7 +678,7 @@ public class OpenApiConfig {
 
 ---
 
-## 🤔 Decisiones Técnicas
+## Decisiones Técnicas
 
 ### 1. **Spring Boot 2.7.18 vs 3.x**
 **Decisión**: Spring Boot 2.7.18
@@ -674,14 +701,8 @@ public class OpenApiConfig {
 - Mejor performance
 - Código más limpio y mantenible
 
-### 4. **JUnit 4 vs JUnit 5**
-**Decisión**: JUnit 4
-**Razones**:
-- Compatibilidad con Spring Boot 2.7.x
-- Estabilidad y madurez
-- Amplio soporte en la comunidad
 
-### 5. **Estrategia de Testing Híbrida**
+### 4. **Estrategia de Testing Híbrida**
 **Decisión**: Combinar tests unitarios y de integración
 **Razones**:
 - Tests unitarios rápidos para desarrollo
@@ -690,17 +711,12 @@ public class OpenApiConfig {
 
 ---
 
-## 📈 Métricas y Performance
+## Métricas y Performance
 
 ### Cobertura de Tests
 - **Tests Unitarios**: 6 clases (Person, Film, Starship, Vehicle, User, UserDetails)
 - **Tests de Integración**: 5 clases (People, Films, Starships, Vehicles, Auth)
-- **Cobertura Total**: ~85-90%
-
-### Performance
-- **Tiempo de respuesta**: < 200ms para operaciones estándar
-- **Tiempo de startup**: ~15-20 segundos
-- **Memoria**: ~512MB en desarrollo
+- **Cobertura Total**: ~90-95%
 
 ### Escalabilidad
 - **Rate limiting**: No implementado (se puede agregar)
@@ -708,18 +724,6 @@ public class OpenApiConfig {
 
 ---
 
-## 🔮 Mejoras Futuras
-
-1. **Implementar caching** con Redis
-2. **Agregar rate limiting** para protección contra abuso
-3. **Implementar logging estructurado** con ELK Stack
-4. **Agregar health checks** y métricas con Actuator
-5. **Migrar a Spring Boot 3.x** y Java 17
-6**Implementar API Gateway** con Spring Cloud
-7**Microservicios** para cada entidad
-
-
----
 
 ## Referencias y Recursos
 
@@ -736,48 +740,47 @@ public class OpenApiConfig {
 - [REST API Design Best Practices](https://restfulapi.net/rest-api-design-tutorial-with-example/)
 
 ### Herramientas de Testing
-- [JUnit 4 User Guide](https://junit.org/junit4/)
+- [JUnit 5 User Guide](https://junit.org/junit5/docs/current/user-guide/)
 - [Mockito Documentation](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html)
 - [WireMock Documentation](http://wiremock.org/docs/)
 
 ---
 
-##  **Uso de Inteligencia Artificial en el Desarrollo**
+## Uso de Inteligencia Artificial en el Desarrollo
 
-### **Enfoque Responsable y Controlado**
+### Enfoque Responsable y Controlado
 
 Este proyecto ha aprovechado las capacidades de **Inteligencia Artificial Generativa (IA)** de manera **controlada y responsable** para optimizar el proceso de desarrollo, siguiendo las mejores prácticas de la industria.
 
-#### **🔍 Cómo se Utilizó la IA**
+#### Cómo se Utilizó la IA
 
-##### **1. Generación de Código Estructurado**
+##### 1. Generación de Código Estructurado
 - **Entidades y DTOs**: Creación de clases base siguiendo patrones establecidos
 - **Mappers**: Generación de interfaces MapStruct con mapeos estándar
 - **Tests unitarios**: Estructura base de tests siguiendo convenciones JUnit
 - **Documentación**: Generación de plantillas y estructura de archivos
 
-##### **2. Documentación y Comentarios**
+##### 2. Documentación y Comentarios
 - **README.md**: Estructura y organización del contenido
 - **TECHNICAL_DOCS.md**: Plantillas de secciones técnicas
 - **Comentarios de código**: Documentación inline siguiendo estándares JavaDoc
 - **Guías de usuario**: Instrucciones claras y estructuradas
 
-##### **3. Optimización de Tiempo**
+##### 3. Optimización de Tiempo
 - **Boilerplate code**: Reducción de código repetitivo
 - **Configuraciones**: Plantillas de configuración Spring Boot
 - **Estructura de directorios**: Organización de paquetes y archivos
 - **Patrones de diseño**: Implementación de patrones arquitectónicos
 
+#### Control y Validación
 
-#### ** Control y Validación**
-
-##### **Revisión Humana Obligatoria**
+##### Revisión Humana Obligatoria
 - **Todo el código generado** es revisado, corregido y validado por mi
 - **Lógica de negocio** implementada manualmente
 - **Tests** corregidos y ejecutados para validar funcionalidad
 - **Documentación** revisada para precisión y claridad
 
-##### **Patrones y Estándares**
+##### Patrones y Estándares
 - **Arquitectura monolítica** diseñada y validada manualmente
 - **Configuración de seguridad** revisada y ajustada manualmente
 - **Integración con SWAPI** implementada con lógica personalizada
@@ -786,9 +789,9 @@ Este proyecto ha aprovechado las capacidades de **Inteligencia Artificial Genera
 
 ## Dependencias JWT Actualizadas
 
-### **Migración de JWT 0.9.1 a 0.11.5**
+### Migración de JWT 0.9.1 a 0.11.5
 
-#### **Dependencias Anteriores (Deprecadas)**
+#### Dependencias Anteriores (Deprecadas)
 ```xml
 <dependency>
     <groupId>io.jsonwebtoken</groupId>
@@ -797,7 +800,7 @@ Este proyecto ha aprovechado las capacidades de **Inteligencia Artificial Genera
 </dependency>
 ```
 
-#### **Dependencias Actuales (Recomendadas)**
+#### Dependencias Actuales (Recomendadas)
 ```xml
 <dependency>
     <groupId>io.jsonwebtoken</groupId>
@@ -818,15 +821,164 @@ Este proyecto ha aprovechado las capacidades de **Inteligencia Artificial Genera
 </dependency>
 ```
 
-#### **Beneficios de la Actualización**
+#### Beneficios de la Actualización
 - **Seguridad mejorada**: Algoritmos más robustos y validaciones adicionales
 - **Compatibilidad**: Mejor integración con versiones modernas de Java
 - **Performance**: Optimizaciones en el parsing y validación de tokens
 - **Mantenimiento**: Soporte activo y correcciones de seguridad
 
-#### **Cambios en el Código**
+#### Cambios en el Código
 - **JwtUtil**: Migrado para usar la nueva API de JWT 0.11.5
 - **Algoritmo**: Cambiado de HS256 a HS512 para mayor seguridad
 - **Validación**: Agregada validación de issuer y manejo robusto de errores
 - **Claves**: Uso de `Keys.hmacShaKeyFor()` para generación segura de claves
+
+---
+
+## Migración de JUnit 4 a JUnit 5
+
+### Cambios Principales Implementados
+
+#### 1. Anotaciones
+```java
+// JUnit 4 → JUnit 5
+@RunWith(MockitoJUnitRunner.class) → @ExtendWith(MockitoExtension.class)
+@RunWith(SpringRunner.class) → @ExtendWith(SpringExtension.class)
+@Before → @BeforeEach
+@After → @AfterEach
+@Test(expected = Exception.class) → @Test + assertThrows()
+```
+
+#### 2. Imports
+```java
+// JUnit 4 → JUnit 5
+import org.junit.Before; → import org.junit.jupiter.api.BeforeEach;
+import org.junit.Test; → import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith; → import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.MockitoJUnitRunner; → import org.mockito.junit.jupiter.MockitoExtension;
+```
+
+#### 3. Manejo de Excepciones
+```java
+// JUnit 4
+@Test(expected = ResourceNotFoundException.class)
+public void shouldThrowException() {
+    service.methodThatShouldThrowException();
+}
+
+// JUnit 5
+@Test
+public void shouldThrowException() {
+    assertThrows(ResourceNotFoundException.class, () -> {
+        service.methodThatShouldThrowException();
+    });
+}
+```
+
+#### 4. Assertions
+```java
+// JUnit 4 → JUnit 5
+import org.junit.Assert.*; → import org.junit.jupiter.api.Assertions.*;
+```
+
+### Configuración de Maven
+
+#### Dependencias Actualizadas
+```xml
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-junit-jupiter</artifactId>
+    <scope>test</scope>
+</dependency>
+```
+
+#### Plugin de Surefire
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>3.0.0</version>
+    <configuration>
+        <includes>
+            <include>**/*Test.java</include>
+            <include>**/*Tests.java</include>
+        </includes>
+        <excludes>
+            <exclude>**/Abstract*.java</exclude>
+        </excludes>
+    </configuration>
+</plugin>
+```
+
+### Beneficios de la Migración
+
+1. **Framework Moderno**: JUnit 5 es activamente mantenido y mejorado
+2. **Mejor Sintaxis**: assertThrows más expresivo que expected
+3. **Extensibilidad**: Sistema de extensiones más flexible
+4. **Compatibilidad**: Mejor integración con Spring Boot 2.7.x
+5. **Futuro**: Base para futuras migraciones a Spring Boot 3.x
+
+---
+
+## Cobertura de Tests con JaCoCo
+
+### Configuración del Plugin
+```xml
+<plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.8.10</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>prepare-agent</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+### Generación de Reportes
+```bash
+# Ejecutar tests y generar reporte de cobertura
+mvn clean test jacoco:report
+
+# Ver reporte en target/site/jacoco/index.html
+```
+
+### Configuración de Umbrales
+```xml
+<execution>
+    <id>check</id>
+    <goals>
+        <goal>check</goal>
+    </goals>
+    <configuration>
+        <rules>
+            <rule>
+                <element>BUNDLE</element>
+                <limits>
+                    <limit>
+                        <counter>LINE</counter>
+                        <value>COVEREDRATIO</value>
+                        <minimum>0.80</minimum>
+                    </limit>
+                </limits>
+            </rule>
+        </rules>
+    </configuration>
+</execution>
+```
 

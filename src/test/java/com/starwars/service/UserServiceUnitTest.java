@@ -4,22 +4,22 @@ import com.starwars.auth.dto.RegisterRequest;
 import com.starwars.auth.entity.User;
 import com.starwars.auth.repository.UserRepository;
 import com.starwars.shared.security.JwtUtil;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UserServiceUnitTest {
 
     @Mock
@@ -67,18 +67,18 @@ public class UserServiceUnitTest {
         verify(jwtUtil).generateToken(any(UserDetails.class));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void registerUser_PasswordMismatch_ShouldThrowException() {
         // Arrange
         RegisterRequest registerRequest = new RegisterRequest("newuser", "password123", "differentpassword");
 
-        // Act
-        userService.registerUser(registerRequest);
-
-        // Assert - Se espera IllegalArgumentException
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            userService.registerUser(registerRequest);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void registerUser_UsernameAlreadyExists_ShouldThrowException() {
         // Arrange
         RegisterRequest registerRequest = new RegisterRequest("existinguser", "password123", "password123");
@@ -86,10 +86,10 @@ public class UserServiceUnitTest {
 
         when(userRepository.findByUsername("existinguser")).thenReturn(Optional.of(existingUser));
 
-        // Act
-        userService.registerUser(registerRequest);
-
-        // Assert - Se espera IllegalArgumentException
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            userService.registerUser(registerRequest);
+        });
     }
 
     @Test

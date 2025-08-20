@@ -19,3 +19,4 @@ public interface StarshipMapper {
     @Mapping(source = "properties.starshipClass", target = "starshipClass")
     StarshipResponseDto toResponseDtoFromDetail(ApiResult<StarshipApiDto> apiResult);
 }
+

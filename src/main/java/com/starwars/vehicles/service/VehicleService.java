@@ -90,3 +90,4 @@ public class VehicleService extends BaseStarWarsService {
                 .collect(Collectors.toList());
     }
 }
+

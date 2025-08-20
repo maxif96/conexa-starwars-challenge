@@ -21,3 +21,4 @@ public class ApiResult<T> {
     @JsonProperty("properties")
     private T properties;
 }
+

@@ -7,11 +7,11 @@ import com.starwars.auth.dto.RegisterResponse;
 import com.starwars.shared.security.JwtUtil;
 import com.starwars.auth.service.UserDetailsServiceImpl;
 import com.starwars.auth.service.UserService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,11 +22,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class AuthControllerUnitTest {
 
     @Mock
@@ -71,7 +71,7 @@ public class AuthControllerUnitTest {
         verify(jwtUtil).generateToken(userDetails);
     }
 
-    @Test(expected = BadCredentialsException.class)
+    @Test
     public void createAuthenticationToken_InvalidCredentials_ShouldThrowBadCredentialsException() {
         // Arrange
         AuthenticationRequest authRequest = new AuthenticationRequest();
@@ -81,10 +81,10 @@ public class AuthControllerUnitTest {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new BadCredentialsException("Invalid credentials"));
 
-        // Act
-        authController.createAuthenticationToken(authRequest);
-
-        // Assert - Se espera BadCredentialsException
+        // Act & Assert
+        assertThrows(BadCredentialsException.class, () -> {
+            authController.createAuthenticationToken(authRequest);
+        });
     }
 
     @Test

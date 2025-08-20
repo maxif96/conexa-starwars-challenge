@@ -19,3 +19,4 @@ public class VehicleApiDto {
     private String vehicleClass;
     private String url;
 }
+

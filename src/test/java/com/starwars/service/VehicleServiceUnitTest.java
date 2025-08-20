@@ -7,12 +7,12 @@ import com.starwars.vehicles.dto.VehicleResponseDto;
 import com.starwars.shared.exception.ResourceNotFoundException;
 import com.starwars.vehicles.mapper.VehicleMapper;
 import com.starwars.vehicles.service.VehicleService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -20,11 +20,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class VehicleServiceUnitTest {
 
     @Mock
@@ -33,7 +33,7 @@ public class VehicleServiceUnitTest {
     @InjectMocks
     private VehicleService vehicleService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Configuramos el baseUrl que se inyecta por @Value
         ReflectionTestUtils.setField(vehicleService, "baseUrl", "https://swapi.tech/api");
@@ -220,7 +220,7 @@ public class VehicleServiceUnitTest {
         verify(vehicleMapper).toResponseDtoFromDetail(any(ApiResult.class));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getVehicleById_NullApiResponse_ShouldThrowException() {
         // Arrange
         String vehicleId = "999";
@@ -228,13 +228,13 @@ public class VehicleServiceUnitTest {
         VehicleService spyService = spy(vehicleService);
         doReturn(null).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getVehicleById(vehicleId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getVehicleById(vehicleId);
+        });
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getVehicleById_NullResult_ShouldThrowException() {
         // Arrange
         String vehicleId = "999";
@@ -243,13 +243,13 @@ public class VehicleServiceUnitTest {
         VehicleService spyService = spy(vehicleService);
         doReturn(apiResponse).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getVehicleById(vehicleId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getVehicleById(vehicleId);
+        });
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getVehicleById_NullProperties_ShouldThrowException() {
         // Arrange
         String vehicleId = "999";
@@ -262,13 +262,13 @@ public class VehicleServiceUnitTest {
         VehicleService spyService = spy(vehicleService);
         doReturn(apiResponse).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getVehicleById(vehicleId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getVehicleById(vehicleId);
+        });
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void getVehicleById_ApiThrowsException_ShouldThrowResourceNotFoundException() {
         // Arrange
         String vehicleId = "1";
@@ -276,10 +276,10 @@ public class VehicleServiceUnitTest {
         VehicleService spyService = spy(vehicleService);
         doThrow(new RuntimeException("API Error")).when(spyService).fetchApiData(anyString(), any(ParameterizedTypeReference.class));
 
-        // Act
-        spyService.getVehicleById(vehicleId);
-
-        // Assert - Se espera ResourceNotFoundException
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            spyService.getVehicleById(vehicleId);
+        });
     }
 
     // Métodos auxiliares para crear objetos de prueba

@@ -19,3 +19,4 @@ public interface VehicleMapper {
     @Mapping(source = "properties.vehicleClass", target = "vehicleClass")
     VehicleResponseDto toResponseDtoFromDetail(ApiResult<VehicleApiDto> apiResult);
 }
+

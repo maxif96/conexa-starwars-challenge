@@ -50,3 +50,4 @@ public class OpenApiConfig {
                                 .url("https://opensource.org/licenses/MIT")));
     }
 }
+

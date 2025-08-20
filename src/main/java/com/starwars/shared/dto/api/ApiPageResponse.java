@@ -29,3 +29,4 @@ public class ApiPageResponse<T> {
     @JsonProperty("results")
     private List<ApiDetailResult<T>> results;
 }
+

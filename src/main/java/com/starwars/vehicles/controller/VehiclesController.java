@@ -56,3 +56,4 @@ public class VehiclesController {
         return ResponseEntity.ok(vehicle);
     }
 }
+

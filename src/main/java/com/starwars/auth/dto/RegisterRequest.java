@@ -23,3 +23,4 @@ public class RegisterRequest {
     @NotBlank(message = "La confirmación de contraseña es obligatoria")
     private String confirmPassword;
 }
+

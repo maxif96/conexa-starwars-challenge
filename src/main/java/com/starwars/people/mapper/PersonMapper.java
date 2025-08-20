@@ -22,3 +22,4 @@ public interface PersonMapper {
     @Mapping(source = "properties.homeworld", target = "homeworld")
     PersonResponseDto toResponseDtoFromDetail(ApiResult<PersonApiDto> apiResult);
 }
+

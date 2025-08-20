@@ -2,20 +2,20 @@ package com.starwars.service;
 
 import com.starwars.auth.entity.User;
 import com.starwars.auth.repository.UserRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UserDetailsServiceImplUnitTest {
 
     @Mock
@@ -50,16 +50,16 @@ public class UserDetailsServiceImplUnitTest {
         verify(userRepository).findByUsername(username);
     }
 
-    @Test(expected = UsernameNotFoundException.class)
+    @Test
     public void loadUserByUsername_NonExistentUser_ShouldThrowUsernameNotFoundException() {
         // Arrange
         String username = "nonexistent";
         when(userRepository.findByUsername(username)).thenReturn(Optional.empty());
 
-        // Act
-        userDetailsService.loadUserByUsername(username);
-
-        // Assert - Se espera UsernameNotFoundException
+        // Act & Assert
+        assertThrows(UsernameNotFoundException.class, () -> {
+            userDetailsService.loadUserByUsername(username);
+        });
     }
 
     @Test
@@ -73,7 +73,7 @@ public class UserDetailsServiceImplUnitTest {
             userDetailsService.loadUserByUsername(username);
             fail("Expected UsernameNotFoundException to be thrown");
         } catch (UsernameNotFoundException e) {
-            assertEquals("User not found with the name: nonexistent", e.getMessage());
+            assertEquals("Usuario no encontrado con el nombre: nonexistent", e.getMessage());
         }
 
         verify(userRepository).findByUsername(username);
@@ -90,7 +90,7 @@ public class UserDetailsServiceImplUnitTest {
             userDetailsService.loadUserByUsername(username);
             fail("Expected UsernameNotFoundException to be thrown");
         } catch (UsernameNotFoundException e) {
-            assertEquals("User not found with the name: ", e.getMessage());
+            assertEquals("Usuario no encontrado con el nombre: ", e.getMessage());
         }
 
         verify(userRepository).findByUsername("");
@@ -107,7 +107,7 @@ public class UserDetailsServiceImplUnitTest {
             userDetailsService.loadUserByUsername(username);
             fail("Expected UsernameNotFoundException to be thrown");
         } catch (UsernameNotFoundException e) {
-            assertEquals("User not found with the name: null", e.getMessage());
+            assertEquals("Usuario no encontrado con el nombre: null", e.getMessage());
         }
 
         verify(userRepository).findByUsername(null);

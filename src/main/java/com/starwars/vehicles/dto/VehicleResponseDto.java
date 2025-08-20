@@ -18,3 +18,4 @@ public class VehicleResponseDto {
     private String passengers;
     private String vehicleClass;
 }
+

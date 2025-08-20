@@ -17,3 +17,4 @@ public interface FilmMapper {
     @Mapping(source = "properties.releaseDate", target = "releaseDate")
     FilmResponseDto toResponseDtoFromDetail(ApiResult<FilmApiDto> apiResult);
 }
+
