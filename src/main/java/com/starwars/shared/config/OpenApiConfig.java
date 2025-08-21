@@ -20,7 +20,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .servers(Arrays.asList(
-                        new Server().url("https://conexa-starwars-api-f5c72652ce2f.herokuapp.com").description("Heroku Production"),
+                        new Server().url("https://web-production-e48ff.up.railway.app").description("Railway Production"),
                         new Server().url("http://localhost:8080").description("Local Development")
                 ))
                 .tags(Arrays.asList(

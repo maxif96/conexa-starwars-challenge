@@ -1,7 +1,10 @@
 # Star Wars API - Sistema de Autenticación y Gestión de Datos
 
 ## Para el equipo técnico de Conexa que revisará el challenge
-Primero que nada, un gusto, futuros compañeros, deseo que se encuentren bien. Ahora, me gustaría aclarar una pequeña cuestión: Entregué el proyecto en tiempo y forma el día Viernes, 15 de Agosto, pero a mi parecer, el proyecto todavía tenía detalles que pulir, por lo que fui editando el código, la arquitectura, la seguridad, etc, para dejar un proyecto final con las mejores prácticas posibles. Es por eso que podrían notar nuevos commits. El proyecto entregado el Viernes podría ser la base para la evaluación, y ya dependerá de ustedes si quieren tener en cuenta los cambios realizados post esa fecha. Mi aclaración va más que nada porque no quiero que se malinterpreten las mejoras posteriores que realicé; estaba con tiempo libre y me sentía un poco insatisfecho con ciertos detalles. Sin más que decir, espero que la navegación a través del código sea de facil entendimiento. Muchas gracias.
+Primero que nada, un gusto, deseo que se encuentren bien. Ahora, me gustaría aclarar una pequeña cuestión: Entregué el proyecto en tiempo y forma el día Viernes, 15 de Agosto, pero a mi parecer, el proyecto todavía tenía detalles que pulir, por lo que fui editando el código, la arquitectura, la seguridad, etc, para dejar un proyecto final con las mejores prácticas posibles. Es por eso que podrían notar nuevos commits. El proyecto entregado el Viernes podría ser la base para la evaluación, y ya dependerá de ustedes si quieren tener en cuenta los cambios realizados post esa fecha. Mi aclaración va más que nada porque no quiero que se malinterpreten las mejoras posteriores que realicé; estaba con tiempo libre y me sentía un poco insatisfecho con ciertos detalles. Sin más que decir, espero que la navegación a través del código sea de facil entendimiento. Muchas gracias.
+
+## Update 21/08/2025
+Para evitar cargos por parte de Heroku, se migró el deployment a Railway, por lo que cualquier url de Heroku ya no funcionará. La siguiente documentación fue actualizada y contiene las urls al deploy en Railways.
 
 ## Descripción
 API REST que integra con la API oficial de Star Wars ([swapi.tech](https://www.swapi.tech)) y proporciona un sistema de autenticación con JWT. La aplicación maneja cuatro entidades principales: **People** (Personajes), **Films** (Películas), **Starships** (Naves Espaciales) y **Vehicles** (Vehículos), con funcionalidades de listado paginado, búsqueda por nombre y obtención por ID.
@@ -146,11 +149,11 @@ La aplicación incluye usuarios predefinidos para testing:
 - **Swagger UI**: `http://localhost:8080/swagger-ui/index.html`
 - **H2 Console**: `http://localhost:8080/h2-console`
 
-### 🚀 **Heroku Production**
-- **Página de Inicio**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/`
-- **Base URL**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com`
-- **Swagger UI**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui/index.html`
-- **API Docs**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api-docs`
+### 🚀 **Railway Production**
+- **Página de Inicio**: `https://web-production-e48ff.up.railway.app/`
+- **Base URL**: `https://web-production-e48ff.up.railway.app/`
+- **Swagger UI**: `https://web-production-e48ff.up.railway.app/swagger-ui/index.html`
+- **API Docs**: `https://web-production-e48ff.up.railway.app/api-docs`
 
 ## 🏠 **Página de Inicio**
 
@@ -165,13 +168,13 @@ Cuando accedas a la URL base de la API, encontrarás una página de inicio atrac
 
 #### **URLs de Acceso:**
 - **Local**: `http://localhost:8080/`
-- **Heroku**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/`
+- **Railway**: `https://web-production-e48ff.up.railway.app/`
 
 ### 📋 **Información de la API (JSON)**
 También puedes obtener información de la API en formato JSON:
 
 - **Local**: `http://localhost:8080/api`
-- **Heroku**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api`
+- **Railway**: `https://web-production-e48ff.up.railway.app/api`
 
 Esta respuesta incluye:
 - Nombre y descripción de la API
@@ -193,7 +196,7 @@ Swagger UI proporciona una interfaz web interactiva para probar todos los endpoi
 
 #### **URLs de Acceso:**
 - **Local**: `http://localhost:8080/swagger-ui/index.html`
-- **Heroku**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui/index.html`
+- **RailWay**: `https://web-production-e48ff.up.railway.app/swagger-ui/index.html`
 
 ### 🔐 **Configuración de Autenticación JWT**
 
@@ -313,9 +316,9 @@ Content-Type: application/json
 }
 ```
 
-**Heroku:**
+**RailWay:**
 ```http
-POST https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/auth/register
+POST https://web-production-e48ff.up.railway.app//auth/register
 Content-Type: application/json
 
 {
@@ -371,10 +374,10 @@ GET http://localhost:8080/people?page=1&limit=10
 GET http://localhost:8080/people?page=2&limit=5
 ```
 
-**Heroku:**
+**Railway:**
 ```http
-GET https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/people?page=1&limit=10
-GET https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/people?page=2&limit=5
+GET https://web-production-e48ff.up.railway.app/people?page=1&limit=10
+GET https://web-production-e48ff.up.railway.app/people?page=2&limit=5
 ```
 
 #### Búsqueda por Nombre
@@ -482,9 +485,9 @@ mvn verify
 - **H2 Console**: `http://localhost:8080/h2-console`
 - **API Docs**: `http://localhost:8080/api-docs`
 
-**Heroku Production:**
-- **Swagger UI**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/swagger-ui.html`
-- **API Docs**: `https://conexa-starwars-api-f5c72652ce2f.herokuapp.com/api-docs`
+**Railway Production:**
+- **Swagger UI**: `https://web-production-e48ff.up.railway.app/swagger-ui.html`
+- **API Docs**: `https://web-production-e48ff.up.railway.app/api-docs`
 - **H2 Console**: No disponible en producción
 
 ## Testing
@@ -645,7 +648,7 @@ jwt.issuer=starwars-api-dev
 #### **Producción**
 ```properties
 # application-prod.properties
-jwt.secret=${JWT_SECRET}  # DEBE venir de variable de entorno (Actualmente ya seteadas en Heroku)
+jwt.secret=${JWT_SECRET}  # DEBE venir de variable de entorno (Actualmente ya seteadas en Railway)
 jwt.expiration=${JWT_EXPIRATION:86400000}
 jwt.issuer=${JWT_ISSUER:starwars-api}
 ```
