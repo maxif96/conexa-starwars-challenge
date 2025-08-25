@@ -1,11 +1,5 @@
 # Star Wars API - Sistema de Autenticación y Gestión de Datos
 
-## Para el equipo técnico de Conexa que revisará el challenge
-Primero que nada, un gusto, deseo que se encuentren bien. Ahora, me gustaría aclarar una pequeña cuestión: Entregué el proyecto en tiempo y forma el día Viernes, 15 de Agosto, pero a mi parecer, el proyecto todavía tenía detalles que pulir, por lo que fui editando el código, la arquitectura, la seguridad, etc, para dejar un proyecto final con las mejores prácticas posibles. Es por eso que podrían notar nuevos commits. El proyecto entregado el Viernes podría ser la base para la evaluación, y ya dependerá de ustedes si quieren tener en cuenta los cambios realizados post esa fecha. Mi aclaración va más que nada porque no quiero que se malinterpreten las mejoras posteriores que realicé; estaba con tiempo libre y me sentía un poco insatisfecho con ciertos detalles. Sin más que decir, espero que la navegación a través del código sea de facil entendimiento. Muchas gracias.
-
-## Update 21/08/2025
-Para evitar cargos por parte de Heroku, se migró el deployment a Railway, por lo que cualquier url de Heroku ya no funcionará. La siguiente documentación fue actualizada y contiene las urls al deploy en Railways.
-
 ## Descripción
 API REST que integra con la API oficial de Star Wars ([swapi.tech](https://www.swapi.tech)) y proporciona un sistema de autenticación con JWT. La aplicación maneja cuatro entidades principales: **People** (Personajes), **Films** (Películas), **Starships** (Naves Espaciales) y **Vehicles** (Vehículos), con funcionalidades de listado paginado, búsqueda por nombre y obtención por ID.
 
